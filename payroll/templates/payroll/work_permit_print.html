@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block content %}
+{% load humanize %}
+{% load static %}
+<div class="card mt-5">
+  <img src="{% static 'images/AM_Logo_RGB_HR.png' %}" class=" ml-2 mt-2" alt="Uniteam-logo" width='150px'>
+    <h5 class="text-center"> Work permit list - {{ c_date  }}</h5>   
+  <div class="card-body"> 
+          <table class="table table-hover h-100 p-3" id="new_table" class="dispaly">
+        <thead>
+          <tr>
+              <th scope="col">SN</th>
+              <th scope="col">Name</th>
+              <th scope="col">Mobile No.</th>
+              <th scope="col">Hotel </th>
+              <th scope="col">Sign</th>
+              
+          </tr>
+          </thead>
+          <tbody>
+          {% for permit in print_list %}
+          <tr>
+              <td scope="row">{{ forloop.counter }}</td>                          
+              <td> {{permit.employee.first_name }}</td>
+              <td> {{permit.employee.phone }}</td>
+              <td> {{permit.employee.hotel }}</td>
+              <td> 
+                  {% if permit.contract_collected %} <i class="fa fa-check"> </i>                                
+                  {% else %}                                
+                  {% endif %}
+              </td>              
+          </tr>
+          {% endfor %}
+          </tbody>
+      </table>
+    </div>
+  </div>
+  <!-- <a class="btn btn-outline-danger btn-lg m-2" href="{% url 'payroll:work_permit_list' %}" role="button">Go Back</a> -->
+    {% endblock %}
+    {% block script %}
+    <script>
+      $(document).ready(function() {
+        $('#table_id').DataTable();
+      });
+    </script>
+    {% endblock %}

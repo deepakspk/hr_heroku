@@ -1,0 +1,208 @@
+
+{% extends "base.html" %}
+{% block content %}
+{% load humanize %}
+
+  <div class="jumbotron mt-3">
+    <h4 class="text-center"> Employee salary record</h4> <hr><hr>
+    <h5> Name : {{fullname.full_name}}</h5>
+    <h5>Employee ID : {{empid}}</h5>
+    <p>{{empid}}</p>
+    <p>{{data.5}}</p>
+    
+
+  <hr>
+  {% if data %}
+    <h5><u>Payslip Records </u></h5>
+    <table class="new_table">
+      <thead>
+        <tr>
+          <th scope="col">SN</th>
+          <th scope="col">Payroll ID</th>
+          <th scope="col">Payroll Month</th>
+          <th scope="col">Mode of Payment</th>
+          <th scope="col">Basic</th>
+          <th scope="col">Housing</th>
+          <th scope="col">Transportation</th>
+          <th scope="col">Other</th>
+          <th scope="col">LOWP</th>
+          <th scope="col">Gross</th>
+          <th scope="col">Additional</th>
+          <th scope="col">Deductions</th>
+          <th scope="col">Net Paid</th>
+          <th scope="col">Download</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for pay in data %}
+        <tr>
+          <td scope="row">{{ forloop.counter }}</td>
+          <td> {{ pay.0.payroll_id }}</td>
+          <td> {{ pay.0.payroll_month }}</td>
+          <td> {{ pay.0.mode_of_payment }}</td>
+          <td> {{ pay.0.basic_salary }}</td>
+          <td> {{ pay.0.housing_allowance }}</td>
+          <td> {{ pay.0.transportation_allowance }}</td>
+          <td> {{ pay.0.other }}</td>
+          <td> {{ pay.0.lowp_deduction }}</td>
+          <td> {{ pay.4 }}</td>
+          <td> {{ pay.1 }}</td>
+          <td> {{ pay.2 }}</td>
+          <td> {{ pay.3 }}</td>
+          <td> <a href="{% url 'payroll:displayPdf' pk=pay.0.payroll_id empid=empid %}"><i class="fa fa-file-pdf"></i></a> </td>
+        </tr>
+        {% endfor %}
+        <tr>
+          <th scope="col">Total</th>
+          <th scope="col"> </th>
+          <th scope="col"> </th>
+          <th scope="col">  </th>
+          <th scope="col"></th>
+          <th scope="col"></th>
+          <th scope="col"></th>
+          <th scope="col"></th>
+          <th scope="col">{{total_lwop}}</th>
+          <th scope="col">{{total_gross}}</th>
+          <th scope="col">{{total_add}}</th>
+          <th scope="col">{{total_ded}}</th>
+          <th scope="col">{{total_net}}</th>
+          <th scope="col"></th>
+        </tr>
+        
+      </tbody>
+    </table>
+  {% else %}
+  <h6> No Record.</h6>
+  {% endif %}
+
+  {% if add %}
+    <h5><u> Additional Pay Records </u></h5>
+    <table class="new_table">
+      <thead>
+        <tr>
+          <th scope="col">SN</th>
+          <th scope="col">Payroll ID</th>
+          <th scope="col">Payroll Month</th>
+          <th scope="col">Particular</th>
+          <th scope="col">Description</th>
+          <th scope="col">Amount</th>
+          <th scope="col">Start Date</th>
+          <th scope="col">End Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for a in add %}
+        <tr>
+          <td scope="row">{{ forloop.counter }}</td>
+          <td> {{ a.report.payroll_id}} </td>
+          <td> {{ a.report.payroll_month}} </td>
+          <td> {{ a.additional }}</td>
+          <td> {{ a.additional_label}}</td>
+          <td> {{ a.amount}}</td>
+          <td> {{ a.start_date}} </td>
+          <td> {{ a.end_date}} </td>
+        </tr>
+        {% endfor %}
+        <tr>
+          <th scope="col">Total</th>
+          <th scope="col"> </th>
+          <th scope="col"> </th>
+          <th scope="col"></th>
+          <th scope="col"></th>
+          <th scope="col">{{total_add}}</th>
+          <th scope="col"> </th>
+          <th scope="col"> </th>
+        </tr>
+      </tbody>
+    </table>
+  {% else %}
+   <h6> No additional records </h6>
+  {% endif %}
+
+  {% if deduction %}
+    <h5><u> Deduction Pay Records </u> </h5>
+    <table class="new_table">
+      <thead>
+        <tr>
+          <th scope="col">SN</th>
+          <th scope="col">Payroll ID</th>
+          <th scope="col">Payroll Month</th>
+          <th scope="col">Particular</th>
+          <th scope="col">Description</th>
+          <th scope="col">Amount</th>
+          <th scope="col">Start Date</th>
+          <th scope="col">End Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for a in deduction %}
+        <tr>
+          <td scope="row">{{ forloop.counter }}</td>
+          <td> {{ a.report.payroll_id}} </td>
+          <td> {{ a.report.payroll_month}} </td>
+          <td> {{ a.deduction }}</td>
+          <td> {{ a.deduction_label}}</td>
+          <td> {{ a.amount}}</td>
+          <td> {{ a.start_date}} </td>
+          <td> {{ a.start_date}} </td>
+        </tr>
+        {% endfor %}
+        <th scope="col">Total</th>
+          <th scope="col"> </th>
+          <th scope="col"> </th>
+          <th scope="col"></th>
+          <th scope="col"></th>
+          <th scope="col">{{total_ded}}</th>
+          <th scope="col"> </th>
+          <th scope="col"> </th>
+      </tbody>
+    </table>
+    {% else %}
+      <h6> No deduction record </h6>
+    {% endif %}
+
+  {% if timesheet %}
+    <h5> <u> Timesheet Records </u> </h5>
+    <table class="new_table">
+      <thead>
+        <tr>
+          <th scope="col">SN</th>
+          <th scope="col">Payroll ID</th>
+          <th scope="col">Payroll Month</th>
+          <th scope="col">Worked Days</th>
+          <th scope="col">Weekend</th>
+          <th scope="col">Public Holiday</th>
+          <th scope="col">Vaccation</th>
+          <th scope="col">Sick leave</th>
+          <th scope="col">Leave w/o pay</th>
+
+        </tr>
+      </thead>
+      <tbody>
+        {% for j in timesheet %}
+        <tr>
+          <td scope="row">{{ forloop.counter }}</td>
+          <td> {{ j.report.payroll_id }}</td>
+          <td> {{ j.report.payroll_month }}</td>
+          <td> {{ j.normal}}</td>
+          <td> {{ j.weekend }}</td>
+          <td> {{ j.holiday }}</td>
+          <td> {{ j.vacation}}</td>
+          <td> {{ j.sick }}</td>
+          <td> {{ j.lwop}}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <h6> No timesheet Records </h6>
+  {% endif %}
+  </div>
+{% endblock %}
+{% block script %}
+<script>
+  $(document).ready( function () {
+    $('#table_id').DataTable();
+  } );
+</script>
+{% endblock %}

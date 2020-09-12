@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% block content %}
+{% load humanize %}
+<p></p>
+<div class="jumbotron">
+  <h1 class="display-4 mb-3">Payroll register</h1>
+  <div class="card mb-5">
+    <h5 class="card-header">Payroll processing</h5>
+    <div class="card-body">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">SN.</th>
+            <th scope="col">Payroll ID</th>
+            <th scope="col">Pay Month</th>
+            <th scope="col">Pay Nos.</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for pay in processing_data %}
+          <tr>
+            <td scope="row">{{ forloop.counter }}</td>
+            <td scope="row"> <a href="{% url 'payroll:process_salary_detail' pk=pay.0.pk %}">
+                {{ pay.0.payroll_id }} </a></td>
+            <td scope="row">{{ pay.0.salary_month | date:'M-Y'}}</td>
+            <td scope="row"> {{pay.1}}</td>
+            {% endfor %}
+        </tbody>
+      </table>
+      <a class="btn btn-outline-info btn-lg mb-2" href="{% url 'payroll:process_salary_create' %}" role="button">Process new payroll</a>
+    </div>
+  </div>
+  <div class="card mb-5">
+    <h5 class="card-header">Paid payroll</h5>
+    <div class="card-body">
+      <table class="table table-hover h-100 p-3" id="table_id" class="dispaly">
+        <thead>
+          <tr>
+            <th scope="col">SN.</th>
+            <th scope="col">Payroll ID</th>
+            <th scope="col">Pay Month</th>
+            <th scope="col">Pay Nos.</th>
+            <!-- <th scope="col">G.Pay</th> -->
+            <th scope="col"> Gross Pay</th>
+            <th scope="col">Additional</th>
+            <th scope="col">Deduction</th>
+            <th scope="col">Net Pay</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for pay in paid_data %}
+          <tr>
+            <td scope="row">{{ forloop.counter }}</td>
+            <td scope="row"> <a href="{% url 'payroll:payroll_detail' pk=pay.0.pk %}">
+                {{ pay.0.payroll_id }} </a></td>
+            <td scope="row"> {{ pay.0.salary_month | date:'M-Y' }}</td>
+            <td scope="row"> {{pay.0.employee_count}}</td>
+            <!-- <td scope="row">{{ pay.0.gross_pay|intcomma}}</td> -->
+            <td scope="row">{{ pay.0.actual_gross_pay|intcomma}}</td>
+            <td scope="row">{{ pay.0.Additional_pay|intcomma}}</td>
+            <td scope="row">{{ pay.0.deduction|intcomma}}</td>
+            <td scope="row">{{ pay.0.total|intcomma}}</td>
+            {% endfor %}
+        </tbody>
+        <tr>
+          <th scope="col">Total</th>
+          <th scope="col"></th>
+          <th scope="col"></th>
+          <th scope="col"></th>
+          <!-- <th scope="col">{{calc_data.0|intcomma}}</th> -->
+          <th scope="col">{{calc_data.4|intcomma}}</th>
+          <th scope="col">{{calc_data.1|intcomma}}</th>
+          <th scope="col">{{calc_data.2|intcomma}}</th>
+          <th scope="col">{{calc_data.3|intcomma}}</th>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block script %}
+<script>
+  $(document).ready(function() {
+    $('#table_id').DataTable();
+  });
+</script>
+{% endblock %}

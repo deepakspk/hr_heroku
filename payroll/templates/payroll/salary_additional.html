@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block content %}
+{% load humanize %}
+
+  <div class="">
+    <h5>Additional pay for {{pay_id}}</h5>
+    <table class="new_table">
+      <thead>
+        <tr>
+          <th scope="col">SN</th>
+          <th scope="col">Employee ID</th>
+          <th scope="col">Employee Name</th>
+          <th scope="col">Particular</th>
+          <th scope="col">Description</th>
+          <th scope="col">Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for i in empData %}
+        <tr>
+          <td scope="row">{{ forloop.counter }}</td>
+          <td> {{i.0}} </td>
+          <td> {{i.1}} </td>
+          <td> {{i.2.additional}} </td>
+          <td> {{i.2.additional_label}}</td>
+          <td> {{i.2.amount}} </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+      <tr>
+        <th scope="col">Total</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+        <th scope="col">{{ total_amount }}</th>
+      </tr>
+    </table>
+  </div>
+
+{% endblock %}
+
+{% block script %}
+<script>
+  $(document).ready( function () {
+    $('#table_id').DataTable();
+  } );
+</script>
+{% endblock %}

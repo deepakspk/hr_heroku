@@ -1,0 +1,18 @@
+Collecting xhtml2pdf
+  Downloading https://files.pythonhosted.org/packages/e0/df/4bd240afb697ede3e4bc6914690f6225ff40a27cefbdbcb69c0ea1303c43/xhtml2pdf-0.2.4.tar.gz (98kB)
+Collecting html5lib>=1.0 (from xhtml2pdf)
+  Using cached https://files.pythonhosted.org/packages/a5/62/bbd2be0e7943ec8504b517e62bab011b4946e1258842bc159e5dfde15b96/html5lib-1.0.1-py2.py3-none-any.whl
+Collecting pyPdf2 (from xhtml2pdf)
+Requirement already satisfied: Pillow in c:\users\dell\anaconda3\envs\mydjangoenv\lib\site-packages (from xhtml2pdf) (6.2.0)
+Collecting reportlab>=3.0 (from xhtml2pdf)
+  Downloading https://files.pythonhosted.org/packages/2c/b9/6efd5ee0319338a4dcfbb5ed6053f5e8a54f356f054c1be1601384361759/reportlab-3.5.34-cp37-cp37m-win_amd64.whl (2.3MB)
+Requirement already satisfied: six in c:\users\dell\anaconda3\envs\mydjangoenv\lib\site-packages (from xhtml2pdf) (1.13.0)
+Collecting webencodings (from html5lib>=1.0->xhtml2pdf)
+  Using cached https://files.pythonhosted.org/packages/f4/24/2a3e3df732393fed8b3ebf2ec078f05546de641fe1b667ee316ec1dcf3b7/webencodings-0.5.1-py2.py3-none-any.whl
+Building wheels for collected packages: xhtml2pdf
+  Building wheel for xhtml2pdf (setup.py): started
+  Building wheel for xhtml2pdf (setup.py): finished with status 'done'
+  Stored in directory: C:\Users\DELL\AppData\Local\pip\Cache\wheels\9b\48\dd\3fb37578f9896e6df9f941536cae8b8d752f33de265b45cdce
+Successfully built xhtml2pdf
+Installing collected packages: webencodings, html5lib, pyPdf2, reportlab, xhtml2pdf
+Successfully installed html5lib-1.0.1 pyPdf2-1.26.0 reportlab-3.5.34 webencodings-0.5.1 xhtml2pdf-0.2.4

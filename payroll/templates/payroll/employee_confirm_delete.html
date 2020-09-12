@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="jumbotron">
+  <h3>Are you sure you want to delete
+    {{ employee.first_name}} {{ employee.last_name}}'s Data???
+  </h3>
+  <form method="post">
+    {% csrf_token %}
+    <input type="submit" class='btn btn-danger btn-lg' value="Delete">
+    <a class="btn btn-primary btn-lg" href="{% url 'payroll:employee_detail' pk=employee.pk %}" role="button">Cancel</a>
+  </form>
+</div>
+{% endblock %}

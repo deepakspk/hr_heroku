@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block content %}
+{% load humanize %}
+{% load static %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<link rel="stylesheet" href="{% static 'css/stylesheet.css'%}">
+<style>
+  @media print{@page{size:landscape}}
+  table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+</style>
+  <p class="new_p"> <strong> Uniteam Mediacal Assistance LLC</strong> </p>
+  <p class="new_p2"> <strong> Pay Details of the Employee</strong> </p>
+    <table class="new_table">
+      <thead>
+        <tr>
+          <th scope="col">SN</th>
+          <th scope="col">Joining Date</th>
+          <th scope="col">Work Permit</th>
+          <th scope="col">Mode of Payment</th>
+          <th scope="col">Employee Unique ID</th>
+          <th scope="col">Basic</th>
+          <th scope="col">Housing</th>
+          <th scope="col">Transportation</th>
+          <th scope="col">Other</th>
+          <th scope="col">Gross</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for i in datas %}
+        <tr>
+          <td scope="row">{{ forloop.counter }}</td>
+          <td> {{i.0.employee.joining_date}} </td>
+          <td> {{i.0.work_permit}} </td>
+
+          <td > {{i.0.mode_of_payment}} </td>
+          <td> {{i.0.employee_unique}}</td>
+          <td> {{i.0.basic_salary}} </td>
+          <td> {{i.0.housing_allowance}} </td>
+          <td> {{i.0.transportation_allowance}} </td>
+          <td> {{i.0.other}} </td>
+          <td> {{i.0.gross_pay}} </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+{% endblock %}

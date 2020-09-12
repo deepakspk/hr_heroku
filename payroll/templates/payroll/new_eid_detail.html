@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="jumbotron mt-3">
+  <h1 class="display-4">New EID details</h1> <hr>
+  <br>
+  <div class="row">
+    <div class="col-xs-4 ">      
+      <p> Name</p>
+      <p> New EID Receive Date</p>
+      <p> EID Distributed Date</p>
+    </div>
+
+    <div class="col-xs-4 offset-1">
+      <p>  {{ new_eid_detail.employee.first_name }}</p>
+      <p>  {{ new_eid_detail.eid_received_date }}</p>
+      <p>  {{ new_eid_detail.eid_collected_date }}</p>
+    </div>
+  </div> <hr>
+  <br>
+    <a class="btn btn-outline-danger btn-lg" href="{% url 'payroll:new_eid_list' %}" role="button">Back to New EID list</a>
+  </div>
+
+{% endblock %}

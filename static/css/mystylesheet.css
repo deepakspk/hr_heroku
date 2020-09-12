@@ -1,0 +1,51 @@
+
+.table_2 td, .table_2 th {
+  text-align: left;
+  font-size: 20px;
+  padding: 0.45rem;
+}
+
+.table_2 td, .table_2 th {
+  text-align: left;
+  font-size: 16px;
+  padding: .45rem;
+}
+
+.new_table td, .new_table th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  font-size: 11px;
+}
+.new_table tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+
+.new_p {
+  margin-top: 1rem;
+  margin-bottom: 0rem;
+}
+.new_p2 {
+  margin-top: 0rem;
+  margin-bottom: 0.3rem;
+}
+.fa-file-pdf {
+  color:red;
+}
+.fa-file-excel {
+  color:green;
+}
+
+dl.row {
+  margin: 0px;
+}
+dl.light_background {
+  border-top: 2px solid #dddddd;
+  border-bottom: 2px solid #dddddd;
+}
+hr {
+  margin: 0px;
+}
+dd {
+  margin: 0px;
+}

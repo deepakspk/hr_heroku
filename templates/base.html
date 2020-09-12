@@ -1,0 +1,137 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+  <!-- static CSS -->
+  <link href="{% static 'css/fa.css' %}"  rel="stylesheet" />
+  <link rel="stylesheet" href="{% static 'css/mystylesheet.css'%}">
+  <link href="https://fonts.googleapis.com/css?family=Tangerine" rel="stylesheet">
+  <title>Uniteam HR</title>
+  {% block css %}
+  {% endblock %}
+</head>
+<body>
+  {% if user.is_superuser %}
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+    <div class="container">
+      <!-- <a class="navbar-brand" href="{% url 'userapp:profile' %}"> -->
+        <a class="navbar-brand" href="#">
+          <img src="{% static 'images/AM_Logo_RGB_HR.png' %}" alt="Uniteam-logo" width='150px'>
+        </a>      
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'payroll:employee_list' %}">Nurses list </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'payroll:hr_records' %}">HR Records</a>
+          </li>
+        </ul>
+        <span class="navbar-text mr-3">
+          Hello, {{user.username }}
+        </span>
+        <form class="form-inline my-2 my-lg-0">
+          <a href="{% url 'accounts:logout' %}" class="btn btn-outline-danger mr-2 "><i class="fas fa-sign-out-alt"></i> Log Out</a>
+        </form>
+      </div>
+    </div>
+  </nav>
+  {% elif user.is_staff%}
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+    <div class="container">
+      <!-- <a class="navbar-brand" href="{% url 'userapp:profile' %}"> -->
+        <a class="navbar-brand" href="#">
+        <img src="{% static 'images/AM_Logo_RGB_HR.png' %}" alt="Uniteam-logo" width='150px'>
+      </a>
+      
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav mr-auto">
+          
+        </ul>
+        <span class="navbar-text mr-3">
+          Hello, {{user.username }}
+        </span>
+        <form class="form-inline my-2 my-lg-0">
+          <a href="{% url 'accounts:logout' %}" class="btn btn-outline-danger mr-2 "><i class="fas fa-sign-out-alt"></i> Log Out</a>
+        </form>
+      </div>
+    </div>
+  </nav>
+  {% elif user.is_authenticated %}
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+    <div class="container">
+      <a class="navbar-brand" href="#"></a>
+      <!-- <a class="navbar-brand" href="{% url 'userapp:index' %}"> -->
+        <img src="{% static 'images/AM_Logo_RGB_HR.png' %}" alt="Uniteam-logo" width='150px'>
+      </a>
+      
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav mr-auto">
+          
+        </ul>
+        <span class="navbar-text mr-3">
+          Hello, {{user.username }}
+        </span>
+        <form class="form-inline my-2 my-lg-0">
+          <a href="{% url 'accounts:logout' %}" class="btn btn-outline-danger mr-2 "><i class="fas fa-sign-out-alt"></i> Log Out</a>
+        </form>
+      </div>
+    </div>
+  </nav>  
+  {% else %}
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+    <div class="container">
+      <!-- <a class="navbar-brand" href="{% url 'userapp:index' %}"> -->
+        <a class="navbar-brand" href="#">
+        <img src="{% static 'images/AM_Logo_RGB_HR.png' %}" alt="Uniteam-logo" width='150px'>
+      </a>      
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav mr-auto"></ul>
+        <form class="form-inline my-2 my-lg-0">
+          <a href="{% url 'accounts:login' %}" class="btn btn-outline-primary mr-2 "><i class="fas fa-user"></i> Log In</a>
+          <a href="{% url 'accounts:signup' %}" class="btn btn-outline-success "> Sign Up <i class="fas fa-user-plus"></i> </a>
+        </form>
+      </div>
+    </div>
+  </nav> 
+  {% endif %}
+
+  <div class="container mycontent">
+    {% block content %}
+    {% endblock %}
+  </div>
+
+  <footer class="page-footer">
+    <div class="container mt-3">
+      <!-- <p class="text-center">© 2020 Aspen Medical </p> -->
+    </div>
+  </footer>
+  <script src="{% static 'js/jquery.js'%}"></script>
+  <script src="{% static 'js/popper.js'%}"></script>
+  <script src="{% static 'js/bootstrap.js'%}"></script>
+  <script type="text/javascript" charset="utf8" src="{% static 'js/datatable.js'%}"></script>
+  <!-- table data JavaScript -->
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+  {% block script %}
+  {% endblock %}
+</body>
+</html>

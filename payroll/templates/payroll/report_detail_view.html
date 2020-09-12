@@ -1,0 +1,243 @@
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+
+  <link rel="stylesheet" href="{% static 'css/stylesheet.css'%}">
+  <title>Uniteam HR</title>
+</head>
+<body>
+<div class="container mycontent">
+<div class="jumbotron mt-3 p-5">
+  <div >
+    <img src="{% static 'images/AM_Logo_RGB_HR.png' %}" alt="aspen-logo"  style="width:300px;" >
+    <p> ABU DHABI, UAE</p>
+    <hr><hr>
+  </div>
+
+  <div class="card-body">
+    <div class="text-center mb-5">
+      <h3 class=" payslip_h3">PAYSLIP <br> <small class="text-muted">For the month of {{report_detail.payroll_month | date:'M-Y'}} </small></h3><hr><hr>
+      <h5> {{report_detail.start_date}} - {{report_detail.finish_date}} </small></h5><hr><hr>
+    </div>
+
+    <dl class="row">
+
+      <dt class="col-sm-3">Employee Name </dt>
+      <dd class="col-sm-8">{{report_detail.full_name}}</dd>
+
+      <dt class="col-sm-3">Work Permit</dt>
+      <dd class="col-sm-8">{{report_detail.work_permit }}</dd>
+
+      <dt class="col-sm-3">Mode of Payment</dt>
+      <dd class="col-sm-8">{{report_detail.mode_of_payment}}</dd>
+    </dl><br><hr><br>
+
+      <dl class="row">
+        <dt class="col-sm-3 mt-2"></dt>
+        <dd class="col-sm-1"></dd>
+        <dd class="col-sm-1"> <strong> Days </strong></dd>
+        <dd class="col-sm-1"> <strong> Base </strong></dd>
+        <dd class="col-sm-1"> <strong> Allowance </strong></dd>
+        <dd class="col-sm-1"> <strong> Transport </strong></dd>
+        <dd class="col-sm-1"> <strong> Other </strong></dd>
+        <dd class="col-sm-1"> <strong> Total </strong></dd>
+      </dl>
+
+      <dl class="row">
+        <dd class="col-sm-3 mt-2"> Salary </dt>
+        <dd class="col-sm-1"> : </dd>
+        <dd class="col-sm-1">  </dd>
+        <dd class="col-sm-1"> {{report_detail.basic_salary}} </dd>
+        <dd class="col-sm-1"> {{report_detail.housing_allowance }} </dd>
+        <dd class="col-sm-1"> {{report_detail.transportation_allowance }} </dd>
+        <dd class="col-sm-1"> {{report_detail.other}} </dd>
+        <dd class="col-sm-1"> {{report_detail.gross_pay}} </dd>
+      </dl>
+
+      <dl class="row">
+        <dd class="col-sm-3 mt-2"> Rate </dt>
+        <dd class="col-sm-1"> : </dd>
+        <dd class="col-sm-1">  </dd>
+        <dd class="col-sm-1"> {{empData.9 }} </dd>
+        <dd class="col-sm-1"> {{empData.10 }} </dd>
+        <dd class="col-sm-1"> {{empData.11 }} </dd>
+        <dd class="col-sm-1"> {{empData.12 }} </dd>
+        <dd class="col-sm-1"> {{empData.13 }} </dd>
+      </dl> <br>
+
+      <dl class="row">
+        <dd class="col-sm-3 mt-2"> Normal </dt>
+        <dd class="col-sm-1"> : </dd>
+        <dd class="col-sm-1"> {{empData.14.0.normal }} </dd>
+        <dd class="col-sm-1"> {{empData.15 }} </dd>
+        <dd class="col-sm-1"> {{empData.16}} </dd>
+        <dd class="col-sm-1"> {{empData.17}} </dd>
+        <dd class="col-sm-1"> {{empData.18}} </dd>
+        <dd class="col-sm-1"> {{empData.19}} </dd>
+      </dl>
+
+      <dl class="row">
+        <dd class="col-sm-3 mt-2"> Weekend </dt>
+        <dd class="col-sm-1"> : </dd>
+        <dd class="col-sm-1"> {{empData.14.0.weekend}} </dd>
+        <dd class="col-sm-1"> {{empData.20 }} </dd>
+        <dd class="col-sm-1"> {{empData.21 }} </dd>
+        <dd class="col-sm-1"> {{empData.22 }} </dd>
+        <dd class="col-sm-1"> {{empData.23 }} </dd>
+        <dd class="col-sm-1"> {{empData.24 }} </dd>
+      </dl>
+
+      <dl class="row">
+        <dd class="col-sm-3 mt-2"> Holiday </dt>
+        <dd class="col-sm-1"> : </dd>
+        <dd class="col-sm-1"> {{empData.14.0.holiday }} </dd>
+        <dd class="col-sm-1"> {{empData.25 }} </dd>
+        <dd class="col-sm-1"> {{empData.26}} </dd>
+        <dd class="col-sm-1"> {{empData.27}} </dd>
+        <dd class="col-sm-1"> {{empData.28}} </dd>
+        <dd class="col-sm-1"> {{empData.29}} </dd>
+      </dl>
+
+      <dl class="row">
+        <dd class="col-sm-3 mt-2"> Vacation </dt>
+        <dd class="col-sm-1"> : </dd>
+        <dd class="col-sm-1"> {{empData.14.0.vacation }} </dd>
+        <dd class="col-sm-1"> {{empData.30 }} </dd>
+        <dd class="col-sm-1"> {{empData.31 }} </dd>
+        <dd class="col-sm-1"> {{empData.32 }} </dd>
+        <dd class="col-sm-1"> {{empData.33 }} </dd>
+        <dd class="col-sm-1"> {{empData.34 }} </dd>
+      </dl>
+
+      <dl class="row">
+        <dd class="col-sm-3 mt-2"> Sick-Leave </dt>
+        <dd class="col-sm-1"> : </dd>
+        <dd class="col-sm-1"> {{empData.14.0.sick }} </dd>
+        <dd class="col-sm-1"> {{empData.35}} </dd>
+        <dd class="col-sm-1"> {{empData.36}} </dd>
+        <dd class="col-sm-1"> {{empData.37}} </dd>
+        <dd class="col-sm-1"> {{empData.38}} </dd>
+        <dd class="col-sm-1"> {{empData.39}} </dd>
+      </dl>
+
+      <dl class="row">
+        <dd class="col-sm-3 mt-2"> LWOP </dt>
+        <dd class="col-sm-1"> : </dd>
+        <dd class="col-sm-1"> {{empData.14.0.lwop }} </dd>
+        <dd class="col-sm-1"> - </dd>
+        <dd class="col-sm-1"> - </dd>
+        <dd class="col-sm-1"> - </dd>
+        <dd class="col-sm-1"> - </dd>
+        <dd class="col-sm-1"> - </dd>
+      </dl>
+
+      <dl class="row">
+        <dd class="col-sm-3 mt-2"> N.P Day </dt>
+          <dd class="col-sm-1"> : </dd>
+          <dd class="col-sm-1"> 0.00 </dd>
+          <dd class="col-sm-1"> - </dd>
+          <dd class="col-sm-1"> - </dd>
+          <dd class="col-sm-1"> - </dd>
+          <dd class="col-sm-1"> - </dd>
+          <dd class="col-sm-1"> - </dd>
+      </dl>
+
+      <dl class="row">
+        <dd class="col-sm-3 mt-2"><strong> Total </strong></dt>
+        <dd class="col-sm-1"> <strong> : </strong> </dd>
+        <dd class="col-sm-1"> <strong> {{empData.14.0.total }} </strong> </dd>
+        <dd class="col-sm-1"> <strong> {{empData.40}} </strong> </dd>
+        <dd class="col-sm-1"> <strong> {{empData.41}} </strong> </dd>
+        <dd class="col-sm-1"> <strong> {{empData.42}} </strong> </dd>
+        <dd class="col-sm-1"> <strong> {{empData.43}} </strong> </dd>
+        <dd class="col-sm-1"> <strong> {{empData.44}} </strong> </dd>
+      </dl> <br>
+
+
+
+    <dl class="row light_background">
+      <dt class="col-sm-3 mt-2"> GROSS PAY </dt>
+      <dt class="col-sm-1">:</dt>
+      <dt class="col-sm-8 mt-2"> {{empData.44}} </dd>
+    </dl>
+  {% if empData.3 %}
+    <dl class="row">
+      <dt class="col-sm-3 mt-2"><h5> Additional Pay </h5></dt>
+      <dd class="col-sm-9"></dd>
+
+      {% for add in empData.3 %}
+      <dd class="col-sm-3"> {{add.additional}} </dt>
+      <dd class="col-sm-1">:</dt>
+      <dd class="col-sm-8">{{add.amount}}</dd>
+  {% endfor %}
+    </dl>
+
+    <dl class="row light_background">
+      <dt class="col-sm-3 mt-2"> TOTAL ADDITIONAL</dt>
+      <dt class="col-sm-1">:</dt>
+      <dt class="col-sm-8 mt-2">{{empData.0}}</dt>
+    </dl>
+  {% endif %}
+
+
+  {% if empData.4 %}
+    <dl class="row">
+      <dt class="col-sm-3 mt-2"><h5> Deduction </h5></dt>
+      <dd class="col-sm-9"></dd>
+      {% for ded in empData.4 %}
+      <dd class="col-sm-3">{{ded.deduction}} </dt>
+      <dd class="col-sm-1">:</dt>
+      <dd class="col-sm-8">{{ded.amount}}</dd>
+      {% endfor %}
+    </dl>
+
+
+    <dl class="row light_background">
+      <dt class="col-sm-3 mt-2"> TOTAL DEDUCTION </dt>
+      <dt class="col-sm-1">:</dt>
+      <dt class="col-sm-8 mt-2"> {{empData.1}} </dd>
+    </dl><hr>
+    {% endif %}
+
+    <dl class="row">
+      <dt class="col-sm-3 mt-2"><h5> <strong>NET PAY </strong></h5></dt>
+      <dt class="col-sm-1">:</dt>
+      <dd class="col-sm-8 mt-2"><h5> <strong> {{empData.2}} </strong> </h6></dd>
+    </dl> <hr>
+
+    <dl class="row">
+      <dt class="col-sm-6 mt-2"><h5>YEAR-TO-DATE (Feb 2020 - Jan 2021)</h5></dt>
+      <dd class="col-sm-6 mt-2"></dd>
+
+      <dd class="col-sm-3">YTD Gross Pay</dt>
+      <dd class="col-sm-1">:</dt>
+      <dd class="col-sm-8">{{empData.7}}</dd>
+
+      <dd class="col-sm-3">YTD Additional Pay </dt>
+      <dd class="col-sm-1">:</dt>
+      <dd class="col-sm-8"> {{empData.5}} </dd>
+
+      <dd class="col-sm-3">YTD Deduction</dt>
+      <dd class="col-sm-1">:</dt>
+      <dd class="col-sm-8">{{empData.6}}</dd>
+
+      <dd class="col-sm-3">YTD Net Pay</dt>
+      <dd class="col-sm-1">:</dt>
+      <dd class="col-sm-8">{{empData.8}}</dd>
+
+    </dl>
+  </div>
+</div>
+</div>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<!-- <script type="text/javascript">
+  $(document).ready( function () {
+  window.print();
+})
+</script> -->
+</body>
+</html>

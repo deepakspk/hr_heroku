@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% block content %}
+{% load humanize %}
+<p></p>
+<div class="jumbotron">
+    <div class="card mb-5">
+        <h5 class="card-header">List of labour contract</h5>
+        <div class="card-body">          
+            <a class="btn btn-info btn-lg mb-2" href="{% url 'payroll:labour_contract_create' %}" role="button"> Add new contract</a>
+            <a class="btn btn-warning btn-lg mb-2" href="{% url 'payroll:m_labour_contract_create' %}" role="button"> Add Multiple contract</a>
+            <!-- <a class="btn btn-outline-primary btn-lg mb-2" href="{% url 'payroll:labour_contract_upload' %}">Bulk labour contract upload</a>
+            <a class="btn btn-outline-primary btn-lg mb-2" href="{% url 'payroll:passport_update' %}">Bulk Update contract upload</a> -->
+            <hr>
+            <h5> Visa issued date:</h5>
+            {% for a in data %}
+                <a class="btn" >{{a |date:'d-M'}} </a>
+               
+            {% endfor%}
+            <hr>
+            <h5> Pending :</h5>
+            <a class="btn btn-outline-secondary mb-2" href="{% url 'payroll:p_contract_sign' %}" role="button"> Contract Sign</a>
+            <a class="btn btn-outline-secondary mb-2" href="{% url 'payroll:p_passport_collect' %}" role="button"> Passport Collection</a>
+            <a class="btn btn-outline-secondary mb-2" href="{% url 'payroll:p_visa_medical' %}" role="button"> Visa Medical</a>           
+    </div>
+    
+    
+</div>
+
+<div class="jumbotron">
+        <div class="form-group row">
+            <form class="form-inline" action="" method="get">
+            <input class="form-control" type="date" name="date" id="example-date-input">
+            <div class="input-group">
+                <select class="custom-select" name="hotel" id="inputGroupSelect04">
+                    <option value=""> Select Hotel</option>                 
+                    {% for pay in hotel %}                   
+                        <option value="{{pay.pk}}"> {{pay}} </option>
+                    {% endfor %}            
+                </select>            
+            </div>
+             <button type="submit" class="btn btn-primary ml-1">Search</button>
+             <a class="btn btn-success ml-5" href="{% url 'payroll:labour_contract_print' %}{{search}}" role="button"> Print </a>
+             <a class="btn btn-success ml-5" href="{% url 'payroll:labour_contract_report' %}{{search}}" role="button"> Report </a>
+            </form>
+        </div>
+        <table class="table table-hover h-100 p-3" id="table_id" class="dispaly">
+
+        <thead>
+        <tr>
+            <th scope="col">SN</th>
+            <th scope="col">Name</th>
+            <th scope="col">Mobile</th>
+            <th scope="col">Hotel </th>
+            <th scope="col">Issue Date</th>
+            <th scope="col">Sign</th>
+            <th scope="col">Passport</th>
+            <th scope="col">Visa Medical </th>
+            <th scope="col">Passport Return</th>
+            <th scope="col"> </th>
+            <th scope="col"></th>
+            
+        </tr>
+        </thead>
+        <tbody>
+        {% for contract in labour_contract_list %}
+        <tr>
+            <td scope="row">{{ forloop.counter }}</td>                       
+            <td> <a href="{% url 'payroll:labour_contract_detail' pk=contract.pk %}"> {{contract.employee.first_name }}</a> </td>                      
+            <td> {{contract.employee.phone }}</td>
+            <td> {{contract.employee.hotel  }}</td>
+            <td> {{contract.contract_issue_date |date:'d-M'}}</td>
+            <td> 
+                {% if contract.contract_collected %} <i class="fa fa-check"> </i>                                
+                {% else %} <i class="fa fa-times"> </i>                                
+                {% endif %} 
+            </td>
+            <td>
+                {% if contract.passport_collected %} <i class="fa fa-check"> </i>                                
+                {% else %} <i class="fa fa-times"> </i>                                
+                {% endif %}
+            </td>
+            <td> 
+                {% if contract.medical_done %} <i class="fa fa-check"> </i>                                
+                {% else %} <i class="fa fa-times"> </i>                                
+                {% endif %}
+            </td>
+            <td> 
+                {% if contract.passport_returned %} <i class="fa fa-check"> </i>                                
+                {% else %} <i class="fa fa-times"> </i>                                
+                {% endif %}
+            </td>
+            <td> <a href="{% url 'payroll:contract_update' pk=contract.pk %}"><i class="fas fa-edit"> </i></a> </td>
+            <td> <a href="{% url 'payroll:labour_contract_delete' pk=contract.pk %}"> <i class="fas fa-trash-alt"></i> </a> </td>   
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+{% block script %}
+<script>
+  $(document).ready(function() {
+    $('#table_id').DataTable();
+  });
+</script>
+{% endblock %}

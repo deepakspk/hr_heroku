@@ -1,0 +1,20 @@
+.display-4 {
+  color: green;
+}
+.card{
+
+  border: 2px double black;
+
+}
+.card-img-top{
+  width: 30%;
+  align-self: center;
+  margin: 10px;
+}
+.card-body{
+  margin: 2px;
+  padding: 100px;
+}
+.payslip_h3{
+  color: #007bff;
+}

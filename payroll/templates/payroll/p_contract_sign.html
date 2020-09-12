@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+{% load humanize %}
+{% load static %}
+<div class="card mt-5">
+  <h5 class="card-header"> <img src="{% static 'images/AM_Logo_RGB_HR.png' %}" class=" ml-2 mt-1 mr-5" alt="Uniteam-logo" width='150px'>Pending for contract sign</h5>
+    <div class="card-body"> 
+        <table class="table table-hover h-100 p-3" id="new_table" class="dispaly">
+            <thead>
+            <tr>
+                <th scope="col">SN</th>
+                <th scope="col">Name</th>
+                <th scope="col">Contract Issued Date</th>
+                <th scope="col">Hotel </th>
+                <th scope="col">Edit</th>                
+            </tr>
+            </thead>
+            <tbody>
+            {% for eid in print_list %}
+            <tr>
+                <td scope="row">{{ forloop.counter }}</td>
+                <td> {{eid.employee.first_name }}</td>
+                <td> {{eid.contract_issue_date }}</td>
+                <td> {{eid.employee.hotel }}</td>
+                <td> <a href="{% url 'payroll:contract_update' pk=eid.pk %}"><i class="fas fa-edit"> </i></a> </td>                
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+<a class="btn btn-outline-danger btn-lg m-2" href="{% url 'payroll:labour_contract_list' %}" role="button"> Go Back </a>          
+{% endblock %}

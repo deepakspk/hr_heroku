@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block content %}
+{% load humanize %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<style>
+  @media print{@page{size:landscape}}
+</style>
+<p class="new_p"> <strong> Uniteam Mediacal Assistance LLC</strong> </p>
+<p class="new_p2"> <strong>Pay Details of the Employee-Lulu Exchange for {{data.salary_month | date:'M-Y'}} </strong> </p>
+
+    <table class="new_table">
+      <thead>
+        <tr>
+          <th scope="col">SN</th>
+          <th scope="col">NAME OF THE EMPLOYEE</th>
+          <th scope="col">WORK PERMIT NO (8 DIGIT NO)</th>
+          <th scope="col">PERSONAL NO (14 DIGIT NO)</th>
+          <th scope="col">BANK NAME & ROUTING NO</th>
+          <th scope="col">BANK ACCOUNT NO</th>
+          <th scope="col">NO OF DAYS ABSENT</th>
+          <th scope="col">FIXED PORTION</th>
+          <th scope="col">VARIABLE PORTION</th>
+          <th scope="col">TOTAL PAYMENT</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for i in datas %}
+        <tr>
+          <td scope="row">{{ forloop.counter }}</td>
+          <td> {{i.0.employee.full_name}} </td>
+          <td> {{i.0.work_permit_8_digits}} </td>
+          <td> {{i.0.personal_no_14_digits}} </td>
+          <td> {{i.0.bank_name_routing}}</td>
+          <td> {{i.0.bank_ac}} </td>
+          <td> {{i.3.lwop}} </td>
+          <td> {{i.0.gross_pay}} </td>
+          <td> {{i.1}} </td>
+          <td> {{i.2}} </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+      <tr>
+        <th scope="col"></th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+        <th scope="col">Total</th>
+        <th scope="col">{{t_gross}}</th>
+        <th scope="col">{{t_vari}}</th>
+        <th scope="col">{{g_total}}</th>
+      </tr>
+    </table>
+{% endblock %}

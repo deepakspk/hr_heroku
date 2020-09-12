@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="jumbotron mt-3">
+  <h1 class="display-4">Work permit details</h1> <hr>
+  <br>
+  <div class="row">
+    <div class="col-xs-4 ">      
+      <p> Name</p>
+      <p> Contract Issue Date</p>
+      <p> Contract collected Date</p>
+      <p> passport Collected Date </p>
+      <p> Visa Medical Date</p>
+      <p> Passport Return Date </p>
+      
+    </div>
+    <div class="col-xs-4 offset-1">
+      <p>  {{ work_permit_detail.employee.first_name }}</p>
+      <p>  {{ work_permit_detail.contract_issue_date }}</p>
+      <p>  {{ work_permit_detail.contract_collected_date }}</p>
+    </div>
+  </div> <hr>
+  <br>
+    <a class="btn btn-outline-danger btn-lg" href="{% url 'payroll:work_permit_list' %}" role="button">Back to work permit list</a>
+  </div>
+
+{% endblock %}

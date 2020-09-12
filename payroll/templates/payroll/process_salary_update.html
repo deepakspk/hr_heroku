@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+  {% load static %}
+  {% block content %}
+  <div class="jumbotron">
+    <div class="col-md-8 offset-2">
+      {% if object.status != "Paid" %}
+      <h1 class="display-4">Update payroll register</h1>
+      <form method="POST">
+        {% csrf_token %}
+        {{form.as_p}}
+        <input type="submit" class="btn btn-primary" name="submit" value="Update">
+      </form>
+      {% else %}
+      <h4>This form is no more editable</h4>
+      {% endif %}
+   </div>
+  </div>
+  {% endblock %}

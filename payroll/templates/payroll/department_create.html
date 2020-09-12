@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<p></p>
+<div class="jumbotron">
+  <div class="col-md-8 offset-2">
+    <h1 class="display-4">Create a new department </h1>
+    {% if message %}
+    <div class="alert alert-success" role="alert">
+      New department created.
+    </div>
+    {% endif %}
+    <form action="{% url 'payroll:department_create' %}" method="POST">
+      {% csrf_token %}
+      {{form.as_p}}
+      <input type="submit" class="btn btn-outline-success" name="submit" value="Submit">
+      <a class="btn btn-outline-danger" href="{% url 'payroll:department_list' %}">Cancel </a>
+    </form>
+  </div>
+</div>
+{% endblock %}

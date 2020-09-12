@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block content %}
+
+{% load humanize %}
+
+  <div class="jumbotron mt-3">
+    <h2 class="display-4">Employee pay details</h2>
+    <a class="btn btn-outline-info btn-lg mb-2" href="{% url 'payroll:payslip_create' %}" role="button">Add new</a>
+    <a class="btn btn-outline-info btn-lg mb-2" href="{% url 'payroll:pay_detail_list_pdf' %}" role="button">Download employee pays details-PDF</a>
+    <a class="btn btn-outline-primary btn-lg mb-2" href="{% url 'payroll:paydetail_upload' %}">Bulk Payslip Upload</a>
+    <a class="btn btn-outline-primary btn-lg mb-2" href="{% url 'payroll:clinical_upload' %}">Bulk Other clinical Upload</a>
+  <hr>
+    <table class="table table-hover" id="table_id">
+      <thead>
+        <tr>
+          <th scope="col">SN</th>
+          <th scope="col">Image</th>
+          <th scope="col">Name</th>
+          <th scope="col">Employee ID</th>
+          <th scope="col">Branch/Dept</th>
+          <th scope="col">Date Joined</th>
+          <th scope="col">Gross Salary</th>
+          <th scope="col">Edit</th>
+          <th scope="col">Del</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for payslip in payslips %}
+        <tr>
+          <td scope="row">{{ forloop.counter }}</td>
+          <td> <a href="{{ payslip.employee.img.url }}"> <img src="{{payslip.employee.img.url}}" width="30" alt=""></a> </td>
+          <td> <a href="{% url 'payroll:payslip_detail' pk=payslip.pk %}">{{payslip.employee}}</a></td>
+          <td> {{ payslip.employee.employee_id }}</td>
+          <td> {{ payslip.employee.department }}</td>
+          <td> {{ payslip.employee.joining_date }}</td>
+          <td> {{ payslip.gross_pay|intcomma }}</td>
+          <td> <a href="{% url 'payroll:payslip_update' pk=payslip.pk %}"><i class="fas fa-edit"></i></a>  </td>
+          <td> <a href="{% url 'payroll:payslip_delete' pk=payslip.pk %}">Delete</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+  </div>
+{{payslip.employee}}
+{% endblock %}
+
+{% block script %}
+<script>
+  $(document).ready( function () {
+    $('#table_id').DataTable();
+  } );
+</script>
+{% endblock %}

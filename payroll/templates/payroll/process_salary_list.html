@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block content %}
+{% load humanize %}
+<p></p>
+
+  <div class="jumbotron">
+    <h2 class="display-4"> Payroll register</h2>
+    <a class="btn btn-outline-info btn-lg mb-2" href="{% url 'payroll:process_salary_create' %}" role="button">Add to process salary</a>
+
+    <table class="table table-hover" id="table_id">
+      <thead>
+        <tr>
+          <th scope="col">SN.</th>
+          <th scope="col">Pay Roll ID</th>
+          <th scope="col">Salary Month</th>
+          <th scope="col">Pay Nos. </th>
+          <th scope="col">Status </th>
+          <th scope="col">Edit </th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for dt in data %}
+        <tr>
+          <td scope="row">{{ forloop.counter }}</td>
+          <td> {{ dt.0.payroll_id }}</td>
+          {% if dt.0.status == "Processing" %}
+          <td> <a href="{% url 'payroll:process_salary_detail' pk=dt.0.pk %}">{{dt.0.salary_month | date:'M-Y' }}</a> </td>
+          {% else %}
+          <td>{{dt.0.salary_month | date:'M-Y' }}</td>
+          {% endif %}
+          <td> {{ dt.1 }}</td>
+          <td> {{ dt.0.status}}</td>
+          {% if dt.0.status == "Processing" %}
+            <td> <a href="{% url 'payroll:process_salary_update' pk=dt.0.pk %}"><i class="fas fa-edit mr-2"> </i></a></td>
+          {% else %}
+            <td> </td>
+          {% endif %}
+          {% endfor %}
+        </tbody>
+    </table>
+  </div>
+{% endblock %}
+
+{% block script %}
+<script>
+  $(document).ready( function () {
+    $('#table_id').DataTable();
+  } );
+</script>
+{% endblock %}

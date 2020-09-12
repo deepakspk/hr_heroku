@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+  <div class="jumbotron shadow-sm p-3 mb-5 rounded mt-3">
+    <h2 class="display-4"> Deduction list</h2>
+    <a class="btn btn-outline-info btn-lg mb-2" href="{% url 'payroll:deduction_create' %}" role="button"><i class="fas fa-user-plus"> </i> Add more deductions</a>
+    <a class="btn btn-outline-primary btn-lg mb-2" href="{% url 'payroll:deduction_upload' %}">Bulk Deduction Upload</a>
+    <hr>
+    <table class="table table-hover h-100 p-3" id="table_id" class="dispaly">
+      <thead>
+        <tr>
+          <th scope="col">SN</th>
+          <th scope="col">Particular</th>
+          <th> Label</th>
+          <th> Amount</th>
+          <th> Employee</th>
+          <th> Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for deduction in deduction_list %}
+        <tr>
+          <td scope="row">{{ forloop.counter }}</td>
+          <td> <a href="{% url 'payroll:deduction_update' pk=deduction.pk %}"> {{deduction.deduction}} </a> </td>
+          <td> {{deduction.deduction_label }}</td>
+          <td> {{deduction.amount}}</td>
+          <td> {{deduction.payslip}}</td>
+          <td> <a href="{% url 'payroll:deduction_delete' pk=deduction.pk %}"> <i class="fas fa-trash-alt"></i> </a> </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+        <tr>
+          <th> Total </th>
+          <th> {{ totalParticular }}</th>
+          <th> </th>
+          <th> {{ tot_ded }}</th>
+          <th> </th>
+          <th> </th>
+        </tr>
+
+    </table>
+  </div>
+
+{% endblock %}
+
+{% block script %}
+<script>
+  $(document).ready( function () {
+    $('#table_id').DataTable();
+  } );
+</script>
+{% endblock %}

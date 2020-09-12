@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="jumbotron">
+  <h3>Are you sure you want to delete
+    {{ payslip.employee}} {{payslip.employee.last_name}}'s payslip?
+  </h3>
+  <form method="post">
+    {% csrf_token %}
+    <input type="submit" class='btn btn-outline-danger' value="Delete">
+    <a class="btn btn-outline-primary" href="{% url 'payroll:payslip_detail' pk=payslip.pk %}" role="button">Cancel</a>
+  </form>
+</div>
+{% endblock %}

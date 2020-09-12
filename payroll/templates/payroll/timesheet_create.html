@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+{% block css %}
+<link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+{% endblock %}
+<p></p>
+<div class="jumbotron">
+  <div class="col-md-8 offset-2">
+    <h1 class="display-4">Create employee timesheet</h1>
+    {% if message %}
+    <div class="alert alert-success" role="alert">
+      New timesheet created.
+    </div>
+    {% endif %}
+    <form method="POST">
+      {% csrf_token %}
+      {{form.as_p}}
+      <input type="submit" class="btn btn-primary" name="submit" value="Submit">
+    </form>
+  </div>
+</div>
+{% endblock %}
+{% block script %}
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+<script>
+  $(document).ready(function() {
+      $('#id_employee').select2();
+      $('#id_payslip').select2();
+      $('#id_deduction').select2();
+      $('#id_occur').select2();
+  });
+</script>
+{% endblock %}

@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div class="jumbotron mt-3">
+  <div class="col-md-12">
+    <h1 class="display-4">Update employee pay details</h1>
+    <form method="POST">
+      {% csrf_token %}
+      {{form.as_p}}
+      <div id="additional_pay_form" class="additional_pay_form shadow h-100 p-3 mb-3">
+        <h3>Addition Pay:</h3>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">S.N.</th>
+              <th scope="col">Particular</th>
+              <th scope="col">Label</th>
+              <th scope="col">Amount</th>
+              <th scope="col">Occurs</th>
+              <th scope="col">Starts</th>
+              <th scope="col">Ends</th>
+              <th scope="col">Edit</th>
+              <th scope="col">Delete</th>
+            </tr>
+          </thead>
+          {% for aPay in addPay %}
+          <tbody>
+            <tr>
+              <td scope="row">{{ forloop.counter }}</td>
+              <td>{{aPay.additional}}</td>
+              <td>{{aPay.additional_label}}</td>
+              <td>{{aPay.amount}}</td>
+              <td>{{aPay.occur}}</td>
+              <td>{{aPay.start_date | date:'Y-m-d' | default_if_none:''}}</td>
+              <td>{{aPay.end_date | date:'Y-m-d' | default_if_none:''}}</td>
+              <td><a href="{% url 'payroll:additional_update' pk=aPay.pk %}"><i class="fas fa-edit"></i></a></td>
+              <td><a href="{% url 'payroll:additional_delete' pk=aPay.pk  %}"><i class="fas fa-trash-alt"></i></a></td>
+            </tr>
+          </tbody>
+          {% endfor %}
+        </table>
+        <a class="btn btn-secondary" href="{% url 'payroll:additional_create' %}"> Add more Additional Pay </a>
+      </div>
+      <div id="deduction_pay_form" class="deduction_pay_form shadow h-100 p-3 mb-3">
+        <h3>Deduction:</h3>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">S.N.</th>
+              <th scope="col">Particular</th>
+              <th scope="col">Label</th>
+              <th scope="col">Amount</th>
+              <th scope="col">Occurs</th>
+              <th scope="col">Starts</th>
+              <th scope="col">Ends</th>
+              <th scope="col">Edit</th>
+              <th scope="col">Delete</th>
+            </tr>
+          </thead>
+          {% for ded in dedPay %}
+          <tbody>
+            <tr>
+              <td scope="row">{{ forloop.counter }}</td>
+              <td>{{ded.deduction}}</td>
+              <td>{{ded.deduction_label}}</td>
+              <td>{{ded.amount}}</td>
+              <td>{{ded.occur}}</td>
+              <td>{{ded.start_date | date:'Y-m-d' | default_if_none:''}}</td>
+              <td>{{ded.end_date | date:'Y-m-d' | default_if_none:''}}</td>
+              <td><a href="{% url 'payroll:deduction_update' pk=ded.pk %}"><i class="fas fa-edit"></i></a></td>
+              <td><a href="{% url 'payroll:deduction_delete' pk=ded.pk  %}"><i class="fas fa-trash-alt"></i></a></td>
+            </tr>
+          </tbody>
+          {% endfor %}
+        </table>
+        <a class="btn btn-secondary" href="{% url 'payroll:deduction_create' %}"> Add more Deduction</a>
+      </div>
+      <input type="submit" class="btn btn-outline-success" name="submit" value="Submit"></input>
+      <a class="btn btn-outline-danger" href="{% url 'payroll:payslip_list' %}">Cancel </a>
+    </form>
+  </div>
+</div>
+{% endblock %}
+{% block script %}
+<script src=" {% static 'js/add.js' %}"> </script>
+{% endblock %}

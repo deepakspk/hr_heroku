@@ -1,0 +1,106 @@
+{% load static %}
+{% load humanize %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<link rel="stylesheet" href="{% static 'css/stylesheet.css'%}">
+<style>
+  @media print{@page{size:landscape}}
+  table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+</style>
+<p class="new_p"> <strong> Uniteam Mediacal Assistance LLC</strong> </p>
+<p class="new_p2"> <strong> Payroll for the month of {{master.4.15.salary_month | date:'M-Y'}} </strong> </p>
+
+  {% for a in master %}
+  <p class="new_p"> {{a.0}} {{a.1}}</p>
+    <table class="new_table">
+      <thead>
+        <tr>
+          <th scope="col">SN.</th>
+          <th scope="col">ID No.</th>
+          <th scope="col">Name</th>
+          <th scope="col">Job Title</th>
+          <th scope="col">Joining Date</th>
+          <th scope="col">Basic</th>
+          <th scope="col">Housing</th>
+          <th scope="col">Transportation</th>
+          <th scope="col">Other</th>
+          <th scope="col">Gross</th>
+          <th scope="col">O.T/Other Income</th>
+          <th scope="col">Annual Ticket</th>
+          <th scope="col">Salary Advance</th>
+          <th scope="col">Deduction</th>
+          <th scope="col">LWOP</th>
+          <th scope="col">Net Salary</th>
+          <th scope="col">WPS Cin1</th>
+          <th scope="col">WPS Cin2</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for i in a.2 %}
+      <tr>
+        <td>{{forloop.counter}}</td>
+        <td > {{i.0.employee_id}}</td>
+
+        <td> {{i.0.full_name}} </td>
+        <td> {{i.0.designation}} </td>
+
+        <td> {{i.0.joining_date}} </td>
+        <td> {{i.1.basic_salary}}</td>
+        <td> {{i.1.housing_allowance}} </td>
+        <td> {{i.1.transportation_allowance}} </td>
+        <td> {{i.1.other}} </td>
+        <td> {{i.1.gross_pay}} </td>
+        <td> {{i.2}} </td>
+        <td> {{i.3}} </td>
+        <td> {{i.4}}</td>
+        <td> {{i.5}} </td>
+        <td> {{i.9}}</td>
+        <td> {{i.6}} </td>
+        <td> {{i.7}} </td>
+        <td> {{i.8}} </td>
+      </tr>
+        {% endfor %}
+      </tbody>
+      <tr>
+        <th scope="col">Total</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+        <th scope="col">{{a.3}}</th>
+        <th scope="col">{{a.4}}</th>
+        <th scope="col">{{a.5}}</th>
+        <th scope="col">{{a.6}}</th>
+        <th scope="col">{{a.7}}</th>
+        <th scope="col">{{a.8}}</th>
+        <th scope="col">{{a.9}}</th>
+        <th scope="col">{{a.10}}</th>
+        <th scope="col">{{a.11}}</th>
+        <th scope="col">{{a.16}}</th>
+        <th scope="col">{{a.12}}</th>
+        <th scope="col">{{a.13}}</th>
+        <th scope="col">{{a.14}}</th>
+      </tr>
+    </table>
+    {% endfor %}
+
+    <div class="row mt-5">
+      <div class="col-sm-2">
+        <p class="new_p"><strong> Aileen </strong></p>
+        <p>Senior Accountant</p>
+      </div>
+      <div class="col-sm-4">
+        <p class="new_p"> <strong> Jennyln </strong></p>
+        <p> Finalcial Controller </p>
+      </div>
+      <div class="col-sm-6">
+        <p class="new_p"> <strong> Sudeep </strong> </p>
+        <p>General Manager</p>
+
+      </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>

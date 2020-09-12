@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block css %}
+<link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+{% endblock %}
+{% block content %}
+<p></p>
+<div class="jumbotron">
+  <div class="col-md-8 offset-2">
+    <h1 class="display-4">Create a new employee</h1>
+    {% if message %}
+    <div class="alert alert-success" role="alert">
+      Thank you for your feedback!!
+    </div>
+    {% endif %}
+    <form action="{% url 'payroll:employee_create' %}" method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{form.as_p}} <hr>
+      <input type="submit" class="btn btn-outline-success" name="submit" value="Submit">
+      <a class="btn btn-outline-danger" href="{% url 'payroll:employee_list' %}">Cancel </a>
+    </form>
+  </div>
+</div>
+{% endblock %}
+{% block script %}
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+<script>
+  $(document).ready(function() {
+      $('#id_gender').select2();
+      $('#id_department').select2();
+  });
+</script>
+{% endblock %}

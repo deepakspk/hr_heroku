@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+{% load humanize %}
+<p></p>
+<div class="jumbotron">
+    <div class="card mb-5">
+        <h5 class="card-header">HR records</h5>
+        <div class="card-body">          
+          <a class="btn btn-outline-info btn-lg mb-2" href="{% url 'payroll:labour_contract_list' %}" role="button">Labour Contract</a>
+          <a class="btn btn-outline-info btn-lg mb-2" href="{% url 'payroll:work_permit_list' %}" role="button">Work Permit</a>
+          <a class="btn btn-outline-info btn-lg mb-2" href="{% url 'payroll:eid_collect_list' %}" role="button">EID Collection</a>
+          <a class="btn btn-outline-info btn-lg mb-2" href="{% url 'payroll:new_eid_list' %}" role="button">New EID</a>
+          <a class="btn btn-outline-info btn-lg mb-2" href="{% url 'payroll:p_return_list' %}" role="button">Passport Return</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block script %}
+<script>
+  $(document).ready(function() {
+    $('#table_id').DataTable();
+  });
+</script>
+{% endblock %}

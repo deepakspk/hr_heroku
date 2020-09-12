@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+{% load humanize %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<link rel="stylesheet" href="{% static 'css/stylesheet.css'%}">
+<style>
+  @media print{@page{size:landscape}}
+  table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+</style>
+<p class="new_p"> <strong> Aspen Mediacal</strong> </p>
+<p class="new_p2"> <strong> Timesheet details of the employee for {{data.salary_month | date:'M-Y'}} </strong> </p>
+    <table class="new_table">
+      <thead>
+        <tr>
+          <th scope="col">SN</th>
+          <th scope="col">Employee ID</th>
+          <th scope="col">Employee Name</th>
+          <th scope="col">Normal </th>
+          <th scope="col">Weekend </th>
+          <th scope="col">Holiday </th>
+          <th scope="col">Vaccation </th>
+          <th scope="col">Sick leave </th>
+          <th scope="col">Leave w/o pay </th>
+
+        </tr>
+      </thead>
+      <tbody>
+        {% for i in timesheet %}
+        <tr>
+          <td scope="row">{{ forloop.counter }}</td>
+          <td> {{i.0.employee_id}} </td>
+          <td> {{i.0.employee.full_name}}</td>
+          <td> {{i.1.0.normal}}</td>
+          <td> {{i.1.0.weekend}}</td>
+          <td> {{i.1.0.holiday}}</td>
+          <td> {{i.1.0.vacation}}</td>
+          <td> {{i.1.0.sick}}</td>
+          <td> {{i.1.0.lwop}}  </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+{% endblock %}

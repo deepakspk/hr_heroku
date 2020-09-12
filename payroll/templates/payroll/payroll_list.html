@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% block content %}
+{% load humanize %}
+<p></p>
+
+<div class="jumbotron">
+
+  <div class="card mb-5">
+  <h5 class="card-header">Payroll processing</h5>
+  <div class="card-body">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">SN.</th>
+          <th scope="col">Payroll ID</th>
+          <th scope="col">Pay Month</th>
+          <th scope="col">Pay Nos.</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for pay in data2 %}
+        <tr>
+          <td scope="row">{{ forloop.counter }}</td>
+          <td scope="row"> <a href="{% url 'payroll:payroll_detail' pk=pay.0.pk %}">
+            {{ pay.0.payroll_id }} </a></td>
+          <td scope="row">{{ pay.0.salary_month }}</td>
+          <td scope="row"> {{pay.1}}</td>
+        {% endfor %}
+      </tbody>
+    </table>
+    <a class="btn btn-outline-info btn-lg mb-2" href="{% url 'payroll:process_salary_create' %}" role="button">Add to process salary</a>
+  </div>
+</div>
+
+<div class="card">
+<h5 class="card-header">Paid payroll</h5>
+<div class="card-body">
+  <table class="table table-hover" id="table_id">
+    <thead>
+      <tr>
+        <th scope="col">SN.</th>
+        <th>actual_payroll_id</th>
+        <th scope="col">Payroll ID</th>
+        <th scope="col">Pay Month</th>
+        <th scope="col">Pay Nos.</th>
+        <th scope="col">Gross Pay</th>
+        <th scope="col">Additional Pay</th>
+        <th scope="col">Deduction</th>
+        <th scope="col">Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for payroll in data %}
+      <tr>
+        <td scope="row">{{ forloop.counter }}</td>
+        <td>{{payroll.0.actual_payroll_id}}</td>
+        <td scope="row"> <a href="{% url 'payroll:process_salary' pk=payroll.0.pk %}">
+          {{ payroll.0.payroll_id }} </a></td>
+        <td scope="row">{{ payroll.0.salary_month }}</td>
+        <td scope="row"> {{payroll.1}}</td>
+        <td scope="row">{{ payroll.0.gross_pay|intcomma }}</td>
+        <td scope="row">{{ payroll.0.Additional_pay|intcomma }}</td>
+        <td scope="row">{{ payroll.0.deduction|intcomma}}</td>
+        <td scope="row">{{ payroll.0.total|intcomma }}</td>
+      {% endfor %}
+    </tbody>
+
+    <tr>
+      <th scope="col">G. Total</th>
+      <th scope="col">{{payroll_count}}-Payroll</th>
+      <th scope="col"> {{getps}} </th>
+      <th scope="col"> </th>
+      <th scope="col">{{tot_gro|intcomma}}</th>
+      <th scope="col">{{tot_add_pay|intcomma}}</th>
+      <th scope="col">{{tot_ded|intcomma}}</th>
+      <th scope="col">{{gra_tot|intcomma}}</th>
+    </tr>
+
+  </table>
+</div>
+</div>
+
+</div>
+{% endblock %}
+
+
+
+{% block script %}
+<script>
+  $(document).ready(function() {
+    $('#table_id').DataTable();
+  });
+</script>
+{% endblock %}

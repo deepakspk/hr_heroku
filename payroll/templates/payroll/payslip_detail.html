@@ -1,0 +1,152 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div class="jumbotron mt-3">
+  <div class="row ">
+    <div class="col-sm-12">
+      <ul class="list-group mb-2">
+          <li class="list-group-item"> <img src="{{payslip_detail.employee.img.url}}" width="200" alt="">
+            <h4>{{payslip_detail.employee.first_name }} {{payslip_detail.employee.last_name }}</h4>
+          </li>
+        <div class="accordion" id="accordionExample">
+          <div class="card">
+            <div class="card-header" id="headingOne">
+              <h5 class="mb-0">
+                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                  Employee Additional Information
+                </button>
+              </h5>
+            </div>
+            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+          <div class="card-body">
+            <li class="list-group-item">{{payslip_detail.employee.phone }}</li>
+            <li class="list-group-item"> {{payslip_detail.employee.email }}</li>
+            <li class="list-group-item">{{payslip_detail.employee.department }} / {{payslip_detail.employee.designation }}</li>
+            <li class="list-group-item">{{payslip_detail.employee.uae_address }}</li>
+          </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header" id="headingTwo">
+            <h5 class="mb-0">
+              <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                Employee salary component
+              </button>
+            </h5>
+          </div>
+          <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+            <div class="card-body">
+              <li class="list-group-item">Basic salary : {{payslip_detail.basic_salary }}</li>
+              <li class="list-group-item"> Housing Allowance : {{payslip_detail.housing_allowance }}</li>
+              <li class="list-group-item"> Transportation allowance : {{payslip_detail.transportation_allowance }}</li>
+              <li class="list-group-item"> Other Allowance : {{payslip_detail.other}}</li>            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header" id="headingThree">
+            <h5 class="mb-0">
+              <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                Employee bank information
+              </button>
+            </h5>
+          </div>
+          <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+            <div class="card-body">
+              <li class="list-group-item">Bank Detail : {{payslip_detail.mode_of_payment }}</li>
+              <li class="list-group-item">Bank Ac No. : {{payslip_detail.bank_ac }}</li>
+              <li class="list-group-item">Employee Unique ID : {{payslip_detail.employee_unique }}</li>
+              <li class="list-group-item">Agent ID : {{payslip_detail.agent_id }}</li>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header" id="headingFour">
+            <h5 class="mb-0">
+              <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                Employee Lulu Exchange information
+              </button>
+            </h5>
+          </div>
+          <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
+            <div class="card-body">
+              <li class="list-group-item">Bank Ac No. : {{payslip_detail.bank_ac }}</li>
+              <li class="list-group-item">Work permit 8 digits : {{payslip_detail.work_permit_8_digits }}</li>
+              <li class="list-group-item">Personal no 14 digits : {{payslip_detail.personal_no_14_digits }}</li>
+              <li class="list-group-item">Bank name & routing no. : {{payslip_detail.bank_name_routing }}</li>
+            </div>
+          </div>
+        </div>
+      </div>
+      </ul>
+      <a class="btn btn-outline-secondary " href="{% url 'payroll:payslip_update' pk=payslip_detail.pk %}" role="button">Edit employee's pay details</a>
+      <a class="btn btn-outline-danger " href="{% url 'payroll:payslip_list' %}" role="button">Back to employee pay details list</a>
+    </div>
+  </div>
+<div id="additional_pay_form" class="additional_pay_form shadow h-100 p-3 mb-3">
+  <h3>Addition Pay:</h3>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">S.N.</th>
+        <th scope="col">Particular</th>
+        <th scope="col">Label</th>
+        <th scope="col">Amount</th>
+        <th scope="col">Occurs</th>
+        <th scope="col">Starts</th>
+        <th scope="col">Ends</th>
+        <th scope="col">Edit</th>
+        <th scope="col">Delete</th>
+      </tr>
+    </thead>
+    {% for aPay in addPay %}
+    <tbody>
+      <tr>
+        <td scope="row">{{ forloop.counter }}</td>
+        <td>{{aPay.additional}}</td>
+        <td>{{aPay.additional_label}}</td>
+        <td>{{aPay.amount}}</td>
+        <td>{{aPay.occur}}</td>
+        <td>{{aPay.start_date | date:'Y-m-d' | default_if_none:''}}</td>
+        <td>{{aPay.end_date | date:'Y-m-d' | default_if_none:''}}</td>
+        <td><a href="{% url 'payroll:additional_update' pk=aPay.pk %}"><i class="fas fa-edit"></i></a></td>
+        <td><a href="{% url 'payroll:additional_delete' pk=aPay.pk  %}"><i class="fas fa-trash-alt"></i></a></td>
+      </tr>
+    </tbody>
+    {% endfor %}
+  </table>
+</div>
+<div id="deduction_pay_form" class="deduction_pay_form shadow h-100 p-3 mb-3">
+  <h3>Deduction:</h3>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">S.N.</th>
+        <th scope="col">Particular</th>
+        <th scope="col">Label</th>
+        <th scope="col">Amount</th>
+        <th scope="col">Occurs</th>
+        <th scope="col">Starts</th>
+        <th scope="col">Ends</th>
+        <th scope="col">Edit</th>
+        <th scope="col">Delete</th>
+      </tr>
+    </thead>
+    {% for ded in dedPay %}
+    <tbody>
+      <tr>
+        <td scope="row">{{ forloop.counter }}</td>
+        <td>{{ded.deduction}}</td>
+        <td>{{ded.deduction_label}}</td>
+        <td>{{ded.amount}}</td>
+        <td>{{ded.occur}}</td>
+        <td>{{ded.start_date | date:'Y-m-d' | default_if_none:''}}</td>
+        <td>{{ded.end_date | date:'Y-m-d' | default_if_none:''}}</td>
+        <td><a href="{% url 'payroll:deduction_update' pk=ded.pk %}"><i class="fas fa-edit"></i></a></td>
+        <td><a href="{% url 'payroll:deduction_delete' pk=ded.pk  %}"><i class="fas fa-trash-alt"></i></a></td>
+      </tr>
+    </tbody>
+    {% endfor %}
+  </table>
+</div>
+</div>
+{% endblock %}

@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+{% load humanize %}
+<div class="jumbotron mt-3">
+  <h1 class="display-4 mb-3">Processing payroll detail</h1>
+  <div class="row">
+    <div class="col-sm-12 col-md-6 process-detail">
+      <ul class="list-group">
+        <li class="list-group-item">Payroll ID      :   {{process_salary_detail.payroll_id }}</li>
+        <li class="list-group-item">Salary Month    :   {{process_salary_detail.salary_month}}</li>
+        <li class="list-group-item">Salary Type     :   {{process_salary_detail.salary_type }}</li>
+        <li class="list-group-item">Status          :   {{process_salary_detail.status }}</li>
+      </ul>
+    </div>
+    <div class="col-sm-12 col-md-6 ">
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle float-right" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Take Actions
+        </button>
+        <div class="dropdown-menu mr-5" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" href="{% url 'payroll:process_salary_master' pk=process_salary_detail.pk %}">
+            <i class="fa fa-file-pdf mr-2"></i> Master File-PDF</a>
+          <!-- <a class="dropdown-item" href="{% url 'payroll:process_salary_paydetails' pk=process_salary_detail.pk %}">
+            <i class="fa fa-file-pdf mr-2"></i> Pay details-PDF</a> -->
+          <a class="dropdown-item" href="{% url 'payroll:process_salary_bank' pk=process_salary_detail.pk %}">
+            <i class="fa fa-file-pdf mr-2"></i> Bank File-PDF</a>
+          <a class="dropdown-item" href="{% url 'payroll:bank_excle' pk=process_salary_detail.pk %}">
+            <i class="fas fa-file-excel mr-2"> </i>  Bank File-Excle</a>
+          <a class="dropdown-item" href="{% url 'payroll:process_salary_lulu' pk=process_salary_detail.pk %}">
+            <i class="fa fa-file-pdf mr-2"></i> Lu Lu Exchange-PDF</a>
+          <a class="dropdown-item" href="{% url 'payroll:lulu_excle' pk=process_salary_detail.pk %}">
+            <i class="fas fa-file-excel mr-2"> </i>  Lu Lu Exchange-excle </a>
+          <a class="dropdown-item" href="{% url 'payroll:process_salary_additional' pk=process_salary_detail.pk %}">
+            <i class="fa fa-file-pdf mr-2"></i> Additional pay-PDF</a>
+          <a class="dropdown-item" href="{% url 'payroll:process_salary_deductions' pk=process_salary_detail.pk %}">
+            <i class="fa fa-file-pdf mr-2"></i> Deduction-PDF</a>
+          <a class="dropdown-item" href="{% url 'payroll:process_salary_timesheet' pk=process_salary_detail.pk %}">
+            <i class="fa fa-file-pdf mr-2"></i> Timesheet-PDF</a>
+        </div>
+      </div>
+    </div>
+  </div><hr>
+    <table class="table table-hover shadow h-100 p-3 mb-3" id="table_id">
+      <thead>
+        <tr>
+          <th scope="col">SN.</th>
+          <th scope="col">Employee</th>
+          <th scope="col">P. Days</th>
+          <th scope="col">Gross Pay</th>
+          <!-- <th scope="col">Actual Gross Pay</th> -->
+          <th scope="col">Additional Pay </th>
+          <th scope="col">Deduction </th>
+          <th scope="col">LWOP</th>
+          <th scope="col">Net Pay </th>
+
+        </tr>
+      </thead>
+      <tbody>
+        {% for processSalary in empData %}
+        <tr>
+
+          <td scope="row">{{ forloop.counter }}</td>
+          <td> <a href="{% url 'payroll:payslip_update' pk=processSalary.0.pk %}"> {{ processSalary.0.employee }}</a></td>
+          <td> {{ processSalary.6.pay_days }}/{{ processSalary.6.total }}</td>
+          <td> {{ processSalary.1 }}</td>
+          <!-- <td> {{ processSalary.5 }}</td> -->
+          <td> {{ processSalary.2 }}</td>
+          <td> {{ processSalary.3 }}</td>
+          <td> {{ processSalary.7 }}</td>
+          <td> {{ processSalary.4 }}</td>
+
+        </tr>
+        {% endfor %}
+        <thead>
+        <tr>
+            <th scope="col">Total</th>
+            <th scope="col"> </th>
+            <th scope="col"> </th>
+            <th scope="col">{{empData2.0}}</th>
+            <!-- <th scope="col">{{empData2.4}}</th> -->
+            <th scope="col">{{empData2.1}} </th>
+            <th scope="col">{{empData2.2}} </th>
+            <th scope="col">{{empData2.5}} </th>
+            <th scope="col"> {{empData2.3}}</th>
+
+          </tr>
+      </thead>
+      </tbody>
+    </table>
+
+  <a class="btn btn-outline-primary btn-lg mt-3" href="{% url 'payroll:update_ps' pk=process_salary_detail.pk %}" role="button"> Process Salary <i class="fas fa-arrow-alt-circle-right"></i> </a>
+  <a class="btn btn-outline-info btn-lg float-right mt-3" href="{% url 'payroll:payroll_register' %}" role="button"><i class="fas fa-arrow-circle-left"></i> Back </a>
+
+  <hr>
+  <a class="btn btn-outline-secondary btn-lg" href="{% url 'payroll:process_salary_update' pk=process_salary_detail.pk %}" role="button">Edit Payroll</a>
+  <a class="btn btn-outline-danger btn-lg" href="{% url 'payroll:process_salary_delete' pk=process_salary_detail.pk %}" role="button">Delete Payroll</a>
+</div>
+{% endblock %}
+{% block script %}
+<script>
+  $(document).ready( function () {
+    $('#table_id').DataTable();
+  } );
+</script>
+{% endblock %}

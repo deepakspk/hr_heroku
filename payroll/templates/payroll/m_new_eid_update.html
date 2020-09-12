@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+  {% load static %}
+  {% block css %}
+<link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+{% endblock %}
+  {% block content %}
+
+  <div class="jumbotron mt-5">
+    <h3> Add multiple new EID collected by nurse date:</h3><hr><br>
+    
+    <form action="{% url 'payroll:m_new_eid_update'%}" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="name">Employee's name</label>
+          <select class="custom-select" id="employees" name="employees[]" multiple>
+            <option></option>
+            {% for emp in employee_list %}
+            <option value= "{{emp.pk}}">{{emp.first_name}}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="form-group form-check mt-4">
+            <input type="checkbox" class="form-check-input" id="collected" name="collected">
+            <label class="form-check-label" for="collected">EID collected by nurse ?</label>
+          </div>
+
+        <div class="form-group">
+          <label class="control-label"  for="eid_collected_date">EID collected by nurse Date</label>
+          <input class="form-control" type="date" class="form-control" id="eid_collected_date" name="eid_collected_date">
+        </div><br><hr>
+
+        <div class="form-group mt-4">
+            <label for="note">Note</label>
+            <textarea class="form-control" type="text" name="note" id="note" rows="3"></textarea>
+          </div>
+        
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <a class="btn btn-warning" href="{% url 'payroll:new_eid_list' %}" role="button">Cancel</a>
+    </form>
+  </div>
+{% endblock %}
+
+{% block script %}
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+<script>
+  $(document).ready(function() {
+      $('#employees').select2();
+  });
+</script>
+{% endblock %}

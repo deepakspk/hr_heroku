@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% block content %}
+{% load humanize %}
+{% load static %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<link rel="stylesheet" href="{% static 'css/stylesheet.css'%}">
+<style>
+  /* @media print{@page{size:landscape}}
+  table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  } */
+
+</style>
+  <p class="new_p"> <strong> Uniteam Mediacal Assistance LLC</strong> </p>
+  <p class="new_p2"> <strong> Pay Details of the Employee for {{ emp.payroll_id }}  ({{ emp.payroll_month }})</strong> </p>
+    <table class="new_table">
+      <thead>
+        <tr>
+          <th scope="col">SN.</th>
+          <th scope="col">Employee Name</th>
+          <th scope="col">Employee ID </th>
+          <th scope="col">Payment Mode</th>
+          <th scope="col">Work Permit</th>
+          <th scope="col">Cost Center</th>
+          <th scope="col">Basic</th>
+          <th scope="col">Housing</th>
+          <th scope="col">Transport</th>
+          <th scope="col">Other</th>
+          <th scope="col">Additional</th>
+          <th scope="col">Deduction </th>
+          <th scope="col">LWOP Deduction </th>
+          <th scope="col">Absent Days </th>
+          <th scope="col">Gross Pay </th>
+          <th scope="col">Net Pay </th>
+
+        </tr>
+      </thead>
+      <tbody>
+        {% for employee in datas %}
+        <tr>
+          <td scope="row">{{ forloop.counter }}</td>
+          <td> {{employee.0.full_name }}</td>
+          <td> {{employee.0.employee_id }}</td>
+          <td> {{employee.0.mode_of_payment }}</td>
+          <td> {{employee.0.work_permit }}</td>
+          <td> {{employee.0.cost_center }}</td>
+          <td> {{employee.0.basic_salary }}</td>
+          <td> {{employee.0.housing_allowance }}</td>
+          <td> {{employee.0.transportation_allowance }}</td>
+          <td> {{employee.0.other }}</td>
+          <td> {{employee.1 }}</td>
+          <td> {{employee.2 }}</td>
+          <td> {{employee.0.lowp_deduction }}</td>
+          <td> {{employee.3.0.lwop }}</td>
+          <td> {{employee.4 }}</td>
+          <td> {{employee.5 }}</td>
+        </tr>
+        {% endfor %}
+        <tr>
+          <th scope="col">Total</th>
+          <th scope="col"> </th>
+          <th scope="col">  </th>
+          <th scope="col"> </th>
+          <th scope="col"> </th>
+          <th scope="col"> </th>
+          <th scope="col"></th>
+          <th scope="col"></th>
+          <th scope="col"></th>
+          <th scope="col"></th>
+          <th scope="col">{{total_empAdd}}</th>
+          <th scope="col"> ( {{total_empDed}} )</th>
+          <th scope="col"> </th>
+          <th scope="col">  </th>
+          <th scope="col"> {{ total_gross}} </th>
+          <th scope="col"> {{total_net}} </th>
+
+        </tr>
+      </tbody>
+    </table>
+{% endblock %}

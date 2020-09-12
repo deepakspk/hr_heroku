@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div class="jumbotron shadow-sm p-3 mb-5 rounded mt-3">
+  <div class="text-center mb-5">
+    <h3 class=" payslip_h3">Emplopee Salary Records </h3><hr><hr>
+  </div>
+  <table class="table table-hover h-100 p-3" id="table_id" class="dispaly">
+    <thead>
+      <tr>
+        <th scope="col">SN</th>
+        <th scope="col">Image</th>
+        <th scope="col">Employee ID</th>
+        <th scope="col">Name</th>
+        <th scope="col">Department</th>
+        <th scope="col">Designation</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for employee in employee_list %}
+      <tr>
+        <td scope="row">{{ forloop.counter }}</td>
+        <td> <a href="{{ employee.img }}"> <img src="{{employee.img.url}}" width="30" alt=""></a> </td>
+        <td> {{employee.employee_id }} </td>
+          <td><a href="{% url 'payroll:salary_record_detail' empid=employee.employee_id %}">{{ employee.full_name }}</a>{% if employee.department_head == True %}
+          <i class="far fa-star"></i>
+          {% endif %}</td>
+        </td>
+        <td> {{employee.department }}</td>
+        <td> {{employee.designation }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
+{% block script %}
+<script>
+  $(document).ready(function() {
+    $('#table_id').DataTable();
+  });
+</script>
+{% endblock %}

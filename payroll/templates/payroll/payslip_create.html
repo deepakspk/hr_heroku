@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+{% block css %}
+<link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+{% endblock %}
+<p></p>
+<div class="jumbotron">
+  <!-- <div class="col-md-12"> -->
+    <h1 class="display-4"> Create employee pay details</h1>
+    {% if message %}
+    <div class="alert alert-success" role="alert">
+      Payslip Created!!
+    </div>
+    {% endif %}
+    <form action="{% url 'payroll:payslip_create' %}" method="POST">
+      {% csrf_token %}
+      {{form.as_p}}
+    <div id="additional_pay_form" class="additional_pay_form shadow h-100 p-3 mb-3">
+      <h3>Addition Pay:</h3>
+      <div class="add-pay-list">
+          <div class="form-row" id="addPay0">
+              <div class="form-group col-md-3">
+              <label for="additional_pay">Pay Type</label>
+              <select id="add_pay" class="form-control" name="apay_type0">
+                  <option value="">Select Additional Pay</option>
+                  <option value="Annual Air Ticket">Annual Air ticket</option>
+                  <option value="Expense Reimbursement">Expense Reimbursement</option>
+                  <option value="Advance Salary">Advance Salary</option>
+                  <option value="Bonus">Bonus</option>
+                  <option value="Other">Other</option>
+              </select>
+              </div>
+              <div class="form-group col-md-2">
+              <label for="label">Label</label>
+              <input type="text" class="form-control" name="alabel0">
+              </div>
+
+              <div class="form-group col-md-1">
+              <label for="amount">Amount</label>
+              <input type="text" class="form-control" name="aamount0">
+              </div>
+              <div class="form-group col-md-1">
+              <label for="occurs">Occurs</label>
+              <select class="form-control" name="aoccurs0" id="aoccurs0" onchange="selectAddChange(this.id,this.value)">
+                  <option value="Once" >Once</option>
+                  <option value="Monthly">Monthly</option>
+              </select>
+              </div>
+              <div class="form-group col-md-2" id="astart_date0">
+              <label>Start Date:</label>
+              <input type="date" name="astart_date0" class="form-control">
+              </div>
+              <div class="form-group col-md-2" id="aend_date0">
+              <label>End Date:</label>
+              <input type="date" name="aend_date0" class="form-control">
+              </div>
+          </div>
+      </div>
+      <button class="btn btn-link" id="addrow" value="Add Row"><i class="fas fa-plus-circle"></i> Add more Additional Pay</button>
+  </div>
+  <div id="deduction_pay_form" class="deduction_pay_form shadow h-100 p-3 mb-3">
+  <h3>Deduction Pay:</h3>
+  <div class="ded-pay-list">
+      <div class="form-row" id="dedPay0">
+          <div class="form-group col-md-3">
+              <label for="additional_pay">Deduction Type</label>
+              <select id="ded_pay" class="form-control" name='dpay_type0'>
+                <option value="">Select Deduction</option>
+                <option value="Housing Loan">Housing Loan</option>
+                <option value="Salary Advance">Salary Advance</option>
+                <option value="Traffic Fine">Traffic Fine</option>
+                <option value="Loan">Loan</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            <div class="form-group col-md-2">
+              <label for="label">Label</label>
+              <input type="text" class="form-control" name='dpay_label0'>
+            </div>
+            <div class="form-group col-md-1">
+              <label for="amount">Amount</label>
+              <input type="text" class="form-control" name='dpay_amount0'>
+            </div>
+            <div class="form-group col-md-1">
+              <label for="occurs">Occurs</label>
+              <select class="form-control" name='dpay_occur0' id="doccurs0" onchange="selectChange(this.id,this.value)">
+                <option value="Once" selected>Once</option>
+                <option value="Monthly">Monthly</option>
+              </select>
+            </div>
+            <div class="form-group col-md-2" id="dstart_date0">
+              <label>Start Date:</label>
+              <input type="date" class="form-control" name='dpay_start0'>
+            </div>
+            <div class="form-group col-md-2" id="dend_date0">
+              <label>End Date:</label>
+              <input type="date" class="form-control" name='dpay_end0'>
+            </div>
+      </div>
+  </div>
+  <button class="btn btn-link" id="addDrow" value="Add Row"><i class="fas fa-plus-circle"></i> Add more deduction </button>
+  </div>
+  <input type="submit" class="btn btn-outline-success" name="submit" value="Submit">
+  <a class="btn btn-outline-danger" href="{% url 'payroll:payslip_list' %}">Cancel </a>
+  </div>
+  </form>
+  </div>
+  </div>
+{% endblock %}
+
+{% block script %}
+<script src=" {% static 'js/add.js' %}"> </script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+<script>
+  $(document).ready(function() {
+      $('#id_employee').select2();
+      $('#id_work_permit').select2();
+      $('#id_cost_center').select2();
+      $('#id_payment_method').select2();
+  });
+</script>
+{% endblock %}

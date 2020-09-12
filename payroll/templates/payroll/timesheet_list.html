@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+  <div class="jumbotron shadow-sm p-3 mb-5 rounded mt-3">
+    <h2 class="display-4">Employee Timesheet</h2>
+    <a class="btn btn-outline-info btn-lg mb-2" href="{% url 'payroll:timesheet_create' %}" ><i class="fas fa-user-plus"> </i> Add employee timesheet</a>
+    <a class="btn btn-outline-primary btn-lg mb-2" href="{% url 'payroll:timesheet_upload' %}">Bulk Upload</a>
+    <hr>
+    <table class="table table-hover h-100 p-3" id="table_id" class="dispaly">
+      <thead>
+        <tr>
+          <th scope="col">SN</th>
+          <th>Employee</th>
+          <th scope="col"> Month</th>
+          <th scope="col">Partial</th>
+          <th scope="col">Normal</th>
+          <th scope="col"> Weekend</th>
+          <th scope="col">Holiday</th>
+          <th scope="col">Vacation</th>
+          <th scope="col"> Sick</th>
+          <th scope="col">LWOP</th>
+          <th scope="col">Total</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for timesheet in timesheet_list %}
+        <tr>
+          <td scope="row">{{ forloop.counter }}</td>
+          <td> <a href="{% url 'payroll:timesheet_update' pk=timesheet.pk %}"> {{timesheet.employee}} </a> </td>
+          <td> {{timesheet.month }} </td>
+          <td> {{timesheet.partial }}</td>
+          <td> {{timesheet.normal}}</td>
+          <td> {{timesheet.weekend}}</td>
+          <td> {{timesheet.holiday }} </td>
+          <td> {{timesheet.vacation }}</td>
+          <td> {{timesheet.sick}}</td>
+          <td> {{timesheet.lwop }}</td>
+          <td> {{timesheet.total}}</td>
+          <td> <a href="{% url 'payroll:timesheet_delete' pk=timesheet.pk %}"> <i class="fas fa-trash-alt"></i> </a> </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+      <button type="button" class="btn btn-outline-danger btn-lg mb-2" data-toggle="modal" data-target="#myModal">
+        Delete all
+      </button>
+    
+      <!-- The Modal -->
+      <div class="modal" id="myModal">
+        <div class="modal-dialog">
+          <div class="modal-content">          
+            <!-- Modal Header
+            <div class="modal-header">
+              <h4 class="modal-title">Modal Heading</h4>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div> -->            
+            <!-- Modal body -->
+            <div class="modal-body">
+              <h4 class="modal-title">Are you sure you want to delete all timesheet ?</h4>
+            </div>            
+            <!-- Modal footer -->
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-success btn-lg mb-2" data-dismiss="modal">Not Sure</button>
+              <a type="button" class="btn btn-outline-danger btn-lg mb-2" href="{% url 'payroll:delete_everything' %}">Delete </a>
+            </div>            
+          </div>
+        </div>
+      </div>
+  </div>
+
+{% endblock %}
+
+{% block script %}
+<script>
+  $(document).ready( function () {
+    $('#table_id').DataTable();
+  } );
+</script>
+{% endblock %}

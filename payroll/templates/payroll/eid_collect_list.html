@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% block content %}
+{% load humanize %}
+<p></p>
+<div class="jumbotron">
+
+    <div class="card mb-5">
+        <h5 class="card-header">EID collection</h5>
+        <div class="card-body">
+          <a class="btn btn-outline-info btn-lg mb-2" href="{% url 'payroll:eid_collect_create' %}" role="button"><i class="fas fa-user-plus"> </i> Add EID Collection request</a>
+          <hr>
+          <h5> Old EID return date:</h5>
+            {% for a in data %}
+                <a class="btn" >{{a |date:'d-M'}} </a>               
+            {% endfor%}
+        </div>
+      </div>
+</div>   
+      <div class="jumbotron">
+              <div class="form-group row">
+                <form class="form-inline" action="" method="get">
+                <input class="form-control" type="date" name="date" id="example-date-input">
+                <div class="input-group">
+                    <select class="custom-select" name="hotel" id="inputGroupSelect04">
+                        <option value=""> Select Hotel</option>                 
+                        {% for pay in hotel %}                   
+                            <option value="{{pay.pk}}"> {{pay}} </option>
+                        {% endfor %}            
+                    </select>            
+                </div>
+                 <button type="submit" class="btn btn-primary ml-1">Search</button>
+                 <a class="btn btn-success ml-5" href="{% url 'payroll:eid_collect_print' %}{{search}}" role="button"> Print </a>
+                </form>
+            </div>
+                    <table class="table table-hover h-100 p-3" id="table_id" class="dispaly">
+                        <thead>
+                        <tr>
+                            <th scope="col">SN</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Mobile No.</th>
+                            <th scope="col">Hotel </th>
+                            <th scope="col">Request Date </th>
+                            <th scope="col">Collected</th>
+                            <th scope="col">Returned</th>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
+                           
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for eid in eid_collect_list %}
+                        <tr>
+                            <td scope="row">{{ forloop.counter }}</td>
+                            <td> <a href="{% url 'payroll:eid_collect_detail' pk=eid.pk %}"> {{eid.employee.first_name }} </a> </td>
+                            <td> {{eid.employee.phone }}</td>
+                            <td> {{eid.employee.hotel }}</td>
+                            <td> {{eid.eid_requested_date }}</td>
+
+                            <td> 
+                                {% if eid.collected %} <i class="fa fa-check"> </i>                                
+                                {% else %} <i class="fa fa-times"> </i>                                
+                                {% endif %}
+                            </td>
+                            <td> 
+                                {% if eid.returned %} <i class="fa fa-check"> </i>                                
+                                {% else %} <i class="fa fa-times"> </i>                                
+                                {% endif %}
+                            </td>
+                            <td> <a href="{% url 'payroll:eid_collect_update' pk=eid.pk %}"><i class="fas fa-edit"> </i></a> </td>
+                            <td> <a href="{% url 'payroll:eid_collect_delete' pk=eid.pk %}"> <i class="fas fa-trash-alt"></i> </a> </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+        </div>          
+          
+            
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block script %}
+<script>
+  $(document).ready(function() {
+    $('#table_id').DataTable();
+  });
+</script>
+{% endblock %}

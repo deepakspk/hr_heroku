@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+{% load humanize %}
+<div class="jumbotron mt-3">
+  <h1 class="display-4 mb-3">Paid payroll detail</h1>
+
+  <a class="btn btn-outline-info btn-lg mb-2" href="{% url 'payroll:downloadAll' pk=data.payroll_id %}" role="button"> Download all Payslips <i class="fas fa-download ml-2 mr-2 "> </i> </a>
+  <a class="btn btn-outline-info btn-lg mb-2" href="{% url 'payroll:email' pk=data.payroll_id %}" role="button"> Send all Payslip <i class="fas fa-paper-plane ml-2 mr-2 "></i></a>
+  <!-- <a class="btn btn-outline-info btn-lg mb-2" href="#" role="button"> Send email</a> -->
+  
+
+  <div class="row">
+    <div class="col-sm-12 col-md-6 process-detail">
+      <ul class="list-group">
+        <li class="list-group-item">Payroll ID : {{data.payroll_id }}</li>
+        <li class="list-group-item">Salary Month : {{data.salary_month}}</li>
+        <li class="list-group-item">Salary Type : {{data.salary_type }}</li>
+        <li class="list-group-item">Status : {{data.status }}</li>
+      </ul>
+    </div>
+    <div class="col-sm-12 col-md-6 ">
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle float-right" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Take Actions
+        </button>
+        <div class="dropdown-menu mr-5" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" href="{% url 'payroll:excle' pk=data.pk %}"> <i class="fas fa-file-excel ml-2 mr-2"> </i>Master Excle</a>
+          <a class="dropdown-item" href="{% url 'payroll:pays_detail_pdf_list' pk=data.pk %}"> <i class="fas fa-download ml-2 mr-2 "> </i> Pay details</a>
+          <a class="dropdown-item" href="{% url 'payroll:salary_additional' pk=data.pk %}"><i class="fas fa-plus-circle ml-2 mr-2"> </i> Additional pay details</a>
+          <a class="dropdown-item" href="{% url 'payroll:salary_deductions' pk=data.pk %}"><i class="fas fa-minus-circle ml-2 mr-2"> </i> Deductions details</a>
+          <a class="dropdown-item" href="{% url 'payroll:emp_timesheet' pk=data.pk %}"><i class="far fa-calendar-times ml-2 mr-2"></i> Timesheet details</a>
+          <a class="dropdown-item" href="{% url 'payroll:email' pk=data.payroll_id %}"><i class="fas fa-paper-plane ml-2 mr-2 "></i>Send bulk payslip</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr>
+  <table class="table table-hover shadow h-100 p-3 mb-3" id="table_id">
+    <thead>
+      <tr>
+        <th scope="col">SN.</th>
+        <th scope="col">Employee</th>
+        <!-- <th scope="col">Gross</th> -->
+        <th scope="col">Gross</th>
+        <th scope="col">Additional</th>
+        <th scope="col">Deduction</th>
+        <th scope="col">LWOP</th>
+        <th scope="col">Net Pay</th>
+        <th scope="col">View Report</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for emp in empData%}
+      <tr>
+        <td scope="row">{{ forloop.counter }}</td>
+        <td> {{ emp.0.full_name }}</td>
+        <!-- <td> {{ emp.2|intcomma }}</td> -->
+        <td> {{ emp.6|intcomma }}</td>
+        <td> {{ emp.3|intcomma }}</td>
+        <td> {{ emp.4|intcomma }}</td>
+        <td> ( {{ emp.7|intcomma }} )</td>
+        <td> {{ emp.5|intcomma }}</td>
+        <td>
+          <!-- <a href="{% url 'payroll:payroll_report_view' payrollid=data.payroll_id empid=emp.1 %}">
+            <i class="fa fa-eye"></i>
+          </a> | -->
+          <a href="{% url 'payroll:payroll_report' payrollid=data.payroll_id empid=emp.1 %}"><i class="fa fa-eye"></i></a> |
+          <!-- <a href="{% url 'payroll:pdf' pk=data.payroll_id empid=emp.1 %}"><i class="fa fa-file-pdf"></i></a> | -->
+          <a href="{% url 'payroll:displayPdf' pk=data.payroll_id empid=emp.1 %}"><i class="fa fa-file-pdf"></i></a> |
+          <a href="{% url 'payroll:emailpdf' pk=data.payroll_id empid=emp.1 %}"><i class="fas fa-paper-plane"></i></a>
+         
+        </td>
+      </tr>
+      {% endfor %}
+      <thead>
+        <tr>
+          <th scope="col">Total</th>
+          <th scope="col"> {{ empCount }} </th>
+          <th scope="col"> {{ total_gross|intcomma }}</th>
+          <!-- <th scope="col"> {{ total_actual_gross }}</th> -->
+          <th scope="col"> {{ total_add|intcomma }}</th>
+          <th scope="col"> {{ total_ded|intcomma }}</th>
+          <th scope="col"> ( {{ total_lwop|intcomma }} )</th>
+          <th scope="col"> {{ total_net|intcomma}}</th>
+          <th scope="col"> </th>
+        </tr>
+      </thead>
+    </tbody>
+  </table>
+  <a class="btn btn-outline-danger btn-lg mt-3" href="{% url 'payroll:payroll_register' %}" role="button">Back to payroll list</a>
+</div>
+{% endblock %}
+{% block script %}
+<script>
+  $(document).ready(function() {
+    $('#table_id').DataTable();
+  });
+</script>
+{% endblock %}

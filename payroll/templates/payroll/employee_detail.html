@@ -1,0 +1,162 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="jumbotron mt-3">
+  <h1 class="display-4">Employee details</h1> <hr>
+  <br>
+  <img src="{{employee_detail.img.url}}" width="200" alt="" class="img-thumbnail" >
+
+  <div class="row">
+    
+    <div class="col-xs-4 "> 
+          
+      <p> Employee ID </p>
+      <p> Name</p>
+      <p> Hotel</p>
+      <p> Department</p>
+      <p> Designation</p>
+      <p> Joining Date </p>
+      <p> Phone </p>
+      <p> Email</p>
+      <p> Date of Birth </p>
+      <p> Gender</p>
+      <p> Citizenship</p>
+      <p> Status</p>
+    </div>
+    <div class="col-xs-4 offset-1">
+      <p>  {{ employee_detail.employee_id }}</p>
+      <p>  {{employee_detail.first_name}} </p>
+      <p> {{employee_detail.hotel }} </p>
+      <p> {{employee_detail.department }} </p>
+      <p>  {{employee_detail.designation }}</p>
+      <p>  {{employee_detail.joining_date }}</p>
+      <p>  {{employee_detail.manager}}</p>
+      <p>  {{employee_detail.phone}}</p>
+      <p>  {{employee_detail.email}}</p>
+      <p>  {{employee_detail.DOB}}</p>
+      <p> {{employee_detail.gender}}</p>
+      <p> {{employee_detail.citizenship}}</p>
+      <p> {{employee_detail.employee_status}}</p>
+      <p></p>
+    </div>
+  </div> <hr>
+    <br>
+    <div class="row">
+      <div class="col-xs-4 ">      
+        <p>Labour contract issued</p>
+        <p> Contract collected </p>
+        <p> Contract collected Date</p>
+        <p> Passport collected </p>
+        <p> Passport collected Date</p>
+        <p> Visa medical Done?</p>
+        <p> Visa medical date</p>
+        <p> Passport received date</p>
+        <p> Passport returned </p>
+        <p> Passport returned date</p> 
+        
+      </div>
+      <div class="col-xs-4 offset-1">
+      {% for a in labourcontract %}
+        <p>{{ a.contract_issue_date}}</p>
+
+        {% if a.contract_collected %} <i class="fa fa-check"> </i>                                
+        {% else %} <i class="fa fa-times"> </i>                                
+        {% endif %} <p></p>
+        <p>{{a.contract_collected_date}}</p>
+
+        {% if a.passport_collected %} <i class="fa fa-check"> </i>                                
+        {% else %} <i class="fa fa-times"> </i>                                
+        {% endif %} <p></p>
+        <p>{{a.passport_collect_date}}</p>
+
+        {% if a.medical_done %} <i class="fa fa-check"> </i>                                
+        {% else %} <i class="fa fa-times"> </i>                                
+        {% endif %} <p></p>
+        <p>{{a.medical_date}}</p>
+
+        <p>{{a.passport_receive_date}}</p>
+
+        {% if a.passport_returned %} <i class="fa fa-check"> </i>                                
+        {% else %} <i class="fa fa-times"> </i>                                
+        {% endif %} <p></p>
+        <p>{{a.passport_returned_date}}</p>
+        {% endfor %}
+      </div>
+    </div> <hr><br>
+
+    <div class="row">
+      <div class="col-xs-4 ">      
+        <p>Work permit issued</p>
+        <p> Contract collected </p>       
+        <p> Contract collected Date</p>        
+      </div>
+      <div class="col-xs-4 offset-1">
+      {% for b in workpermit %}
+        <p>{{ b.contract_issue_date}}</p>
+        {% if b.contract_collected %} <i class="fa fa-check"> </i>                                
+        {% else %} <i class="fa fa-times"> </i>                                
+        {% endif %} <p></p>
+        <p>{{ b.contract_collected_date}}</p>
+        {% endfor %}
+      </div>
+    </div> <hr><br>
+
+    <div class="row">
+      <div class="col-xs-4 ">      
+        <p>EID requested date</p>
+        <p>Collected </p>       
+        <p> Collected date</p>
+        <p> Returned </p>       
+        <p> EId returned date</p>        
+      </div>
+      <div class="col-xs-4 offset-1">
+      {% for b in eidcollect %}
+        <p>{{ b.eid_requested_date}}</p>
+
+        {% if b.collected %} <i class="fa fa-check"> </i>                                
+        {% else %} <i class="fa fa-times"> </i>                                
+        {% endif %} <p></p>
+        
+        <p>{{ b.eid_collected_date}}</p>
+
+        {% if b.returned %} <i class="fa fa-check"> </i>                                
+        {% else %} <i class="fa fa-times"> </i>                                
+        {% endif %} <p></p>
+        
+        <p>{{ b.eid_returned_date}}</p>
+        {% endfor %}
+      </div>
+    </div> <hr><br>
+
+    <div class="row">
+      <div class="col-xs-4 ">      
+        <p> New EID received date</p>
+        <p> EID given </p>       
+        <p> EID given date</p>
+               
+      </div>
+      <div class="col-xs-4 offset-1">
+      {% for b in neweid %}
+        <p>{{ b.eid_received_date}}</p>
+        {% if  b.collected %} <i class="fa fa-check"> </i>                                
+        {% else %} <i class="fa fa-times"> </i>                                
+        {% endif %} <p></p>
+        <p>{{ b.eid_collected_date}}</p>
+        {% endfor %}
+      </div>
+    </div> <hr><br>
+
+    <div class="row">
+      <div class="col-xs-4">      
+        <p> Note </p>               
+      </div>
+      <div class="col-xs-4 offset-2">
+      {% for emp in labourcontract %}
+        <p>{{ emp.note }}</p>
+      {% endfor %}
+      </div>
+    </div> <hr><br>
+    <a class="btn btn-outline-secondary btn-lg" href="{% url 'payroll:employee_update' pk=employee_detail.pk %}" role="button">Edit employee data</a>
+    <a class="btn btn-outline-danger btn-lg" href="{% url 'payroll:employee_list' %}" role="button">Back to employee list</a>
+  </div>
+
+{% endblock %}

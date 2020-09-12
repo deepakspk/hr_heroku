@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+{% if user.is_authenticated %}
+<div class="jumbotron shadow-sm p-3 mb-5 rounded mt-3">
+  <h5> Hi, {{user.username }} </h5>
+  <p> {{ user.email }}</p>
+</div>
+{% else %}
+<div class="jumbotron shadow-sm p-3 mb-5 rounded mt-3">
+  <h2 class="display-4"> Welcome </h2>
+     <p> </p><strong> Please login to get access to your profile. <a href="{% url 'accounts:login' %}" class="btn btn-simple"> Login <i class="fas fa-user"></i></a> </strong></a> <hr>
+    
+</div>
+{% endif %}
+{% endblock %}
+{% block script %}
+<script>
+</script>
+{% endblock %}

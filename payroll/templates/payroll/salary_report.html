@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block content %}
+
+{% load humanize %}
+
+  <div class="jumbotron mt-3">
+    <h2 class="display-4">All Reports</h2>
+  <table class="table table-hover" id="table_id">
+    <thead>
+      <tr>
+        <th>S.N.</th>
+        <th>Emp ID</th>
+        <th>Emp Name</th>
+        <th>Payroll ID</th>
+        <th>Paroll Month</th>
+        <th>Gross</th>
+        <th>Additions</th>
+        <th>Deductions</th>
+        <th>Net Pay</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for report in data%}
+      <tr>
+        <td> {{ forloop.counter }}</td>
+        <td> {{report.0.employee_id}}</td>
+        <td> <a href="{% url 'payroll:report_detail' pk=report.0.pk %}"> {{report.0.full_name}} </a> </td>
+        <td> {{report.0.payroll_id}}</td>
+        <td> {{report.0.payroll_month}}</td>
+        <td> {{report.0.gross_pay}}</td>
+        <td> {{report.1}}</td>
+        <td> {{report.2}}</td>
+        <td> {{report.3}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+  $(document).ready( function () {
+    $('#table_id').DataTable();
+  } );
+</script>
+{% endblock %}

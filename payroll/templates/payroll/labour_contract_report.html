@@ -1,0 +1,94 @@
+{% load humanize %}
+{% load static %}
+<link href="{% static 'css/fa.css' %}"  rel="stylesheet"/>
+<style>
+  .new_table {
+    width: 100%;
+    /* margin-bottom: 1rem; */
+    color: #212529
+  }
+
+  .new_table td,
+  .new_table th {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    /* padding: .75rem; */
+    vertical-align: top;
+    border-top: 1px solid #dee2e6
+  }
+
+  .new_table thead th {
+    vertical-align: bottom;
+    border-bottom: 2px solid #dee2e6
+  }
+
+  .new_table tbody+tbody {
+    border-top: 2px solid #dee2e6
+  }
+</style>
+<div class="card mt-5">
+  <img src="{% static 'images/AM_Logo_RGB_HR.png' %}" class=" ml-2 mt-2" alt="Uniteam-logo" width='150px'>
+  <h2> Labour contract Report </h2>
+  <div class="card-body">
+    <table class="new_table" id="new_table" class="dispaly">
+      <thead>
+        <tr>
+          <th scope="col">SN</th>
+          <th scope="col">Name</th>
+          <th scope="col">Mobile</th>
+          <th scope="col">Hotel</th>
+          <th scope="col">Contract Issue</th>
+          <th scope="col">Contract Collect</th>
+          <th scope="col">Passport collect</th>
+          <th scope="col">Passport Collect Date</th>
+          <th scope="col">Medical </th>
+          <th scope="col">Passport Receive Date </th>
+          <th scope="col">passport Return</th>
+          <th scope="col">Passport Return Date </th>
+          <th scope="col">Note </th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for contract in print_list %}
+        <tr>
+          <td scope="row">{{ forloop.counter }}</td>
+          <td> {{contract.employee.first_name }}</td>
+          <td> {{contract.employee.phone }}</td>
+          <td> {{contract.employee.hotel }}</td>
+          <td> {{contract.contract_issue_date |date:'d-M'}} </td>
+          <td>
+            {% if contract.contract_collected %} <i class="fa fa-check"> </i>
+            {% else %}
+            {% endif %}
+          </td>
+          <td>
+            {% if contract.passport_collected %} <i class="fa fa-check"> </i>
+            {% else %}
+            {% endif %}
+          </td>
+          <td> {{contract.passport_collect_date |date:'d-M'}} </td>
+          <td>
+            {% if contract.medical_done %} <i class="fa fa-check"> </i>
+            {% else %}
+            {% endif %}
+          </td>
+          <td> {{contract.passport_receive_date |date:'d-M'}} </td>
+          <td>
+            {% if contract.passport_returned %} <i class="fa fa-check"> </i>
+            {% else %}
+            {% endif %}
+          </td>
+          <td> {{contract.passport_returned_date |date:'d-M'}} </td>
+          <td>
+            {% if contract.note %} {{contract.note}} </i>
+            {% else %}
+            {% endif %}
+          </td>
+          </td>
+        </tr>
+        </h5>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+</div>

@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="jumbotron mt-3">
+  <h1 class="display-4">Labour Contract details</h1> <hr>
+  <br>
+  <div class="row">
+    <div class="col-xs-4 ">      
+      <p> Name</p>
+      <p> Staff ID</p>
+      <p> Phone no</p>
+      <p> Hotel</p><hr> <br>
+
+
+      <p> Contract Issue Date</p>
+
+      <p> Contract collected</p>
+      <p> Contract collected Date</p><hr> <br>
+
+      <p> Passport Collected </p>
+      <p> passport Collected Date </p>
+
+      <p> Visa Medical Done </p>
+      <p> Visa Medical Date</p><hr> <br>
+
+      <p> Passport Receive Date</p>
+      <p> Passport Returned to nurse</p>
+      <p> Passport Return to nurse Date </p>
+
+      <hr><br>
+      <p> Note </p>
+      
+    </div>
+    <div class="col-xs-4 offset-1">
+      <p>  {{ labour_contract_detail.employee.first_name }}</p>
+      <p>  {{ labour_contract_detail.employee.employee_id }}</p>
+      <p>  {{ labour_contract_detail.employee.phone }}</p>
+      <p>  {{ labour_contract_detail.employee.hotel }}</p><hr> <br>
+      
+      <p>  {{ labour_contract_detail.contract_issue_date }}</p>
+      
+      {% if labour_contract_detail.contract_collected %} <i class="fa fa-check"> </i>                                
+        {% else %} <i class="fa fa-times"> </i>                                
+      {% endif %} <p></p>
+      <p>  {{ labour_contract_detail.contract_collected_date }}</p><hr> <br>
+
+      {% if labour_contract_detail.passport_collected %} <i class="fa fa-check"> </i>                                
+                {% else %} <i class="fa fa-times"> </i>                                
+                {% endif %} <p></p>
+
+      <p>  {{ labour_contract_detail.passport_collect_date }}</p>
+
+      {% if labour_contract_detail.medical_done %} <i class="fa fa-check"> </i>                                
+        {% else %} <i class="fa fa-times"> </i>                                
+      {% endif %} <p></p>
+      <p>  {{ labour_contract_detail.medical_date }}</p>
+      <hr><br>
+
+      <p>  {{ labour_contract_detail.passport_receive_date }}</p>
+      {% if labour_contract_detail.passport_returned %} <i class="fa fa-check"> </i>                                
+        {% else %} <i class="fa fa-times"> </i>                                
+      {% endif %} <p></p>
+      <p>  {{ labour_contract_detail.passport_returned_date }}</p><hr><br>
+      
+      <p> {{ labour_contract_detail.note }}</p>
+    </div>
+  </div> <hr>
+  <br>
+    <a class="btn btn-outline-danger btn-lg" href="{% url 'payroll:labour_contract_list' %}" role="button">Back to labour contract list</a>
+  </div>
+
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+  {% load static %}
+  {% block css %}
+<link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+{% endblock %}
+  {% block content %}
+  <div class="jumbotron mt-5">    
+    <form action="{% url 'payroll:m_passport_return_collected'%}" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <h3 class="deepak m-2">Multiple passport collected by nurse</h3><hr><br>
+          <label for="name">Employee's name</label>
+          <select class="custom-select" id="employees" name="employees[]" multiple>
+            <option></option>
+            {% for emp in employee_list %}
+            <option value= "{{emp.pk}}">{{emp.first_name}}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-group form-check mt-4">
+            <input type="checkbox" class="form-check-input" id="passport_return" name="passport_return">
+            <label class="form-check-label" for="passport_return">Passport Returned ?</label>
+          </div>
+        <div class="form-group">
+          <label class="control-label"  for="return_to_employee">Passport Receive by Employee Date</label>
+          <input class="form-control" type="date" class="form-control" id="return_to_employee" name="return_to_employee">
+        </div><br><hr>
+        <div class="form-group mt-4">
+            <label for="note">Note</label>
+            <textarea class="form-control" type="text" name="note" id="note" rows="3"></textarea>
+          </div>        
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <a class="btn btn-warning" href="{% url 'payroll:p_return_list' %}" role="button">Cancel</a>
+    </form>
+  </div>
+{% endblock %}
+{% block script %}
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+<script>
+  $(document).ready(function() {
+      $('#employees').select2();
+  });
+</script>
+{% endblock %}

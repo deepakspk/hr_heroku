@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div class="jumbotron mt-3 p-5">
+  <img src="{% static 'images/uniteam-logo.png' %}" style="width:300px;" alt="Uniteam-logo">
+  <h5> UNITEAM MEDICAL ASSISTANCE LLC.</h5>
+  <h5> ABU DHABI, UAE</h5>
+  <hr>
+  <div class="card-body">
+    <h3 class=" payslip_h3 text-center">PAYSLIP <br> <small class="text-muted">For the month of Janaury 2020 </small></h3>
+    <p> Employee Name : {{data.employee}}</p>
+    <p> Date Joined : {{emp_data.joining_date }}</p>
+    <p> Work Permit : {{emp_data.work_permit }}</p>
+    <p> Mode of Payment : {{data.mode_of_payment}}</p>
+    <hr>
+    <h5> EARNINGS:</h5>
+    <p> Basic salary : {{data.basic_salary }}</p>
+    <p> Housing Allowance : {{data.housing_allowance }}</p>
+    <p> Transportation Allowance : {{data.transportation_allowance }}</p>
+    <p> Other Allowance : {{payslip_detail.other_allowance }}</p>
+    <hr>
+    <h5> GROSS PAY : {{data.gross_pay}}</h5>
+    <hr>
+
+    <h5> ADDITIONAL PAY:</h5>
+    {% for add in addpay %}
+    <p> {{add.additional}} : {{add.amount}}</p>
+    {% endfor %}
+    <h5> ADDITIONAL PAY : {{empAdd}}</h5>
+    <hr>
+
+    <h5> DEDUCTION : </h5>
+    {% for ded in dedpay %}
+    <p> {{ded.deduction}} : {{ded.amount}}</p>
+    {% endfor %}
+
+    <h5> TOTAL DEDUCTION : {{empDed}} </h5><hr>
+
+    <h3>NET PAY : {{netPay}}</h3><hr>
+    <h5> YEAR-TO-DATE(July 2018- June 2019)</h5>
+    <p>YTD Earnings:</p>
+    <p>YTD Deduction:</p>
+    <p>YTD Reimbursements:</p>
+    <p>YTD Net Pay:</p>
+
+
+  </div>
+</div>
+{% endblock %}

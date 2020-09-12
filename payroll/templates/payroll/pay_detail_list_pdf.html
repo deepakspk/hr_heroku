@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block content %}
+{% load humanize %}
+{% load static %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<link rel="stylesheet" href="{% static 'css/stylesheet.css'%}">
+<style>
+  @media print{@page{size:landscape}}
+  table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+</style>
+  <p class="new_p"> <strong>Aspen Medical </strong> </p>
+  <p class="new_p2"> <strong>Employee Pay Details</strong> </p>
+    <table class="new_table">
+      <thead>
+        <tr>
+          <th scope="col">SN.</th>
+          <th scope="col">Employee Name</th>
+          <th scope="col">Employee ID </th>
+          <th scope="col">Payment Mode</th>
+          <th scope="col">Work Permit</th>
+          <th scope="col">Cost Center</th>
+          <th scope="col">Basic</th>
+          <th scope="col">Housing</th>
+          <th scope="col">Transport</th>
+          <th scope="col">Other</th>
+          <th scope="col">Gross Pay </th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for employee in data %}
+        <tr>
+          <td scope="row">{{ forloop.counter }}</td>
+          <td> {{employee.employee}}</td>
+          <td> {{employee.employee_id }}</td>
+          <td> {{employee.mode_of_payment }}</td>
+          <td> {{employee.work_permit }}</td>
+          <td> {{employee.cost_center }}</td>
+          <td> {{employee.basic_salary }}</td>
+          <td> {{employee.housing_allowance }}</td>
+          <td> {{employee.transportation_allowance }}</td>
+          <td> {{employee.other }}</td>
+          <td> {{employee.gross_pay }}</td>
+        </tr>
+        {% endfor %}
+        <tr>
+          <th scope="col">Total</th>
+          <th scope="col"> </th>
+          <th scope="col">  </th>
+          <th scope="col"> </th>
+          <th scope="col"> </th>
+          <th scope="col"> </th>
+          <th scope="col">  </th>
+          <th scope="col">  </th>
+          <th scope="col">  </th>
+          <th scope="col">  </th>
+          <th scope="col">  </th>
+        </tr>
+      </tbody>
+    </table>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block css %}
+<link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+{% endblock %}
+{% block content %}
+<p></p>
+<div class="jumbotron">
+  <div class="col-md-8 offset-2">
+    <h1 class="display-4">Process for salary</h1>
+    {% if message %}
+    <div class="alert alert-success" role="alert">
+      Payslip created
+    </div>
+    {% endif %}
+    <form action="{% url 'payroll:process_salary_create' %}" method="POST">
+      {% csrf_token %}
+      {{form.as_p}}
+      <input type="submit" class="btn btn-outline-success btn-lg" name="submit" value="Submit">
+      <a class="btn btn-outline-danger btn-lg" href="{% url 'payroll:payroll_register' %}">Cancel </a>
+    </form>
+  </div>
+</div>
+{% endblock %}
+{% block script %}
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+<script>
+  $(document).ready(function() {
+      $('#id_employee').select2();
+      $('#id_salary_type').select2();
+  });
+</script>
+{% endblock %}

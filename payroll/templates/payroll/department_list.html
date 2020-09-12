@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+{% load humanize %}
+<p></p>
+
+<div class="jumbotron">
+  <h2 class="display-4"> Department list</h2>
+  <a class="btn btn-outline-info btn-lg mb-2" href="{% url 'payroll:department_create' %}" role="button">Add department <i class="fas fa-landmark ml-2"></i></a>
+
+  <table class="table table-hover" id="table_id">
+    <thead>
+      <tr>
+        <th scope="col">SN.</th>
+        <th scope="col">Department Name</th>
+        <th scope="col">Edit </th>
+        <th scope="col">Department Head</th>
+        <th scope="col">No. of Employee</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for department in Data %}
+      <tr>
+        <td scope="row">{{ forloop.counter }}</td>
+        <td><a href="{% url 'payroll:empdeplist' pk=department.0.pk %}">{{department.0.department}} </a> </td>
+        <td><a href="{% url 'payroll:department_update' pk=department.0.pk %}"><i class="fas fa-edit mr-2"> </i></a></td>
+        <td> {{department.2}}</td>
+        <td>{{department.1}}</td>
+      {% endfor %}
+    </tbody>
+  </table>
+  <a class="btn btn-outline-danger btn-lg mt-3" href="{% url 'payroll:employee_list' %}" role="button">Back to employee list</a>
+</div>
+{% endblock %}
+{% block script %}
+<script>
+  $(document).ready(function() {
+    $('#table_id').DataTable();
+  });
+</script>
+{% endblock %}
